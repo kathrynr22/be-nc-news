@@ -4,8 +4,16 @@ const {
   formatComments,
 } = require('../db/utils/utils');
 
-describe('formatDates', () => {});
+// This utility function should be able to take an array(`list`) of objects and return a new array.Each item in the new array must have its timestamp converted into a Javascript date object.Everything else in each item must be maintained.
 
-describe('makeRefObj', () => {});
+//   _hint: Think carefully about how you can test that this has worked - it's not by copying and pasting a sql timestamp from the terminal into your test_
 
-describe('formatComments', () => {});
+describe('formatDates', () => {
+  test('returns an empty array when passed an empty array', () => {
+    expect(formatDates([])).toEqual([]);
+  })
+});
+
+describe('makeRefObj', () => { });
+
+describe('formatComments', () => { });
