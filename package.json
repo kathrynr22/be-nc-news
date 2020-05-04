@@ -13,7 +13,9 @@
     "seed-dev": "npm run setup-db-dev && knex seed: run",
     "seed-test": "npm run setup-db-test && NODE_ENV=test knex seed:run",
     "migrate-latest": "knex migrate:latest",
-    "migrate-rollback": "knex migrate: rollback"
+    "migrate-rollback": "knex migrate: rollback",
+    "seed-make": "knex seed:make",
+    "migrate-make": "knex migrate:make"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "express": "^4.17.1",
     "jest-sorted": "^1.0.6",
     "knex": "^0.21.1",
+    "pg": "^8.0.3",
     "postgres": "^1.0.2"
   },
   "devDependencies": {
