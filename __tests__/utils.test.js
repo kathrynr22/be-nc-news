@@ -12,6 +12,10 @@ describe('formatDates', () => {
   test('returns an empty array when passed an empty array', () => {
     expect(formatDates([])).toEqual([]);
   })
+  test('returns a new array', () => {
+    const input = [];
+    expect(formatDates(input)).not.toBe(input)
+  })
 });
 
 describe('makeRefObj', () => { });
