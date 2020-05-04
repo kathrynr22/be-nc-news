@@ -13,7 +13,7 @@
     "seed-dev": "npm run setup-db-dev && knex seed: run",
     "seed-test": "npm run setup-db-test && NODE_ENV=test knex seed:run",
     "migrate-latest": "knex migrate:latest",
-    "migrate-rollback": "knex migrate: rollback",
+    "migrate-rollback": "knex migrate:rollback",
     "seed-make": "knex seed:make",
     "migrate-make": "knex migrate:make"
   },
