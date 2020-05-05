@@ -17,6 +17,13 @@ describe('/api', () => {
             console.log(body)
             expect(Array.isArray(body.topics)).toBe(true)
             expect(body.topics.length).toBe(3)
+          })
+      })
+      test('topic objects contains a slug and description property', () => {
+        return request(app)
+          .get('/api/topics')
+          .expect(200)
+          .then(({ body }) => {
             body.topics.forEach((topic) => {
               expect(topic).toHaveProperty('slug')
               expect(topic).toHaveProperty('description')
@@ -26,3 +33,4 @@ describe('/api', () => {
     })
   })
 })
+
