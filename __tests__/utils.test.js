@@ -86,10 +86,68 @@ describe('formatComments', () => {
     const input = [];
     expect(formatComments(input)).not.toBe(input)
   })
-});
-test('it does not mutate the original input testing an empty array', () => {
-  const input = [];
-  formatComments(input);
-  expect(input).toEqual([]);
-});
+  test('it does not mutate the original input testing an empty array', () => {
+    const input = [];
+    formatComments(input);
+    expect(input).toEqual([]);
+  });
+  test('returns a new empty array, when passed an empty array', () => {
+    const comments = [];
+    const articleRef = {};
+    const actual = formatComments(comments, articleRef);
+    const expected = [];
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(comments);
+  });
+  test('it does not mutate the original comments and articleRef input', () => {
+    const comments = [
+      {
+        body: ' I carry a log — yes. Is it funny to you? It is not to me.',
+        belongs_to: 'Living in the shadow of a great man',
+        created_by: 'icellusedkars',
+        votes: -100,
+        created_at: 1416746163389,
+      },
+    ];
+    const articleRef = {
+      A: 1
+    };
+    formatComments(comments, articleRef);
+    expect(comments).toEqual([
+      {
+        body: ' I carry a log — yes. Is it funny to you? It is not to me.',
+        belongs_to: 'Living in the shadow of a great man',
+        created_by: 'icellusedkars',
+        votes: -100,
+        created_at: 1416746163389,
+      },
+    ]);
+    expect(articleRef).toEqual({
+      A: 1
+    })
+  })
+})
+// test(“it changes a specific key in each object within the array and references the lookup object”, () => {
+//   const input = [
+//     { name: “Grammatics”, artist: “Grammatics”, releaseYear: 2009 },
+//   { name: “Kingdom of Rust”, artist: “Doves”, releaseYear: 2009 },
+//     ];
+// const lookupObj = {
+//   Grammatics: 9923,
+//   Doves: 324,
+// };
 
+// expect(formatAlbums(input, lookupObj)).toEqual([
+//   {
+//     artistId: 9923,
+//     name: “Grammatics”,
+//   releaseYear: 2009,
+//       },
+//   {
+//     artistId: 324,
+//     name: “Kingdom of Rust”,
+//   releaseYear: 2009,
+//       },
+// ]);
+//   });
+// });
