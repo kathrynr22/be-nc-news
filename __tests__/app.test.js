@@ -17,6 +17,10 @@ describe('/api', () => {
             console.log(body)
             expect(Array.isArray(body.topics)).toBe(true)
             expect(body.topics.length).toBe(3)
+            body.topics.forEach((topic) => {
+              expect(topic).toHaveProperty('slug')
+              expect(topic).toHaveProperty('description')
+            })
           })
       })
     })
