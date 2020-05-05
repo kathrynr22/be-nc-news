@@ -1,6 +1,6 @@
 const express = require('express');
 const apiRouter = require('./routes/apiRouter')
-const { handleInternalErrors, handle405s, send404 } = require('./controllers/errors.controllers')
+const { handleInternalErrors, handle405s, send404 } = require('./controllers/errorControllers')
 const app = express();
 
 app.use(express.json());

@@ -55,24 +55,32 @@ describe('/api', () => {
       })
     })
   })
-  describe.only('/users', () => {
+  describe('/users', () => {
     describe('/:username', () => {
       describe('GET', () => {
         test('status: 200 responds with the requested username object', () => {
           return request(app)
             .get('/api/users/lurker')
             .expect(200)
-            .then(({ body }) => {
-              expect(body.user[0]).toEqual({
+            .then(({ body: { user } }) => {
+              expect(user[0]).toEqual({
                 username: 'lurker',
                 name: 'do_nothing',
                 avatar_url:
                   'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
               })
-
+            })
+        })
+        test('status 400: invalid username', () => {
+          return request(app)
+            .get('/api/users/u5er')
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
             })
         })
       })
     })
+
   })
 })
