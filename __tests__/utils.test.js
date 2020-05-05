@@ -18,47 +18,45 @@ describe('formatDates', () => {
     const input = [];
     expect(formatDates(input)).not.toBe(input)
   })
-});
-test('it does not mutate the original input testing an empty array', () => {
-  const input = [];
-  formatDates(input);
-  expect(input).toEqual([]);
-});
-
-test('it does not mutate the original input testing actual data', () => {
-  const input = [{
-    title: 'Who Will Manage Your Club in 2021?',
-    topic: 'football',
-    author: 'happyamy2016',
-    body:
-      'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
-    created_at: 1472144905177,
-  },];
-  formatDates(input);
-  expect(input).toEqual([{
-    title: 'Who Will Manage Your Club in 2021?',
-    topic: 'football',
-    author: 'happyamy2016',
-    body:
-      'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
-    created_at: 1472144905177,
-  },]);
+  test('it does not mutate the original input testing an empty array', () => {
+    const input = [];
+    formatDates(input);
+    expect(input).toEqual([]);
+  });
+  test('it does not mutate the original input testing actual data', () => {
+    const input = [{
+      title: 'Who Will Manage Your Club in 2021?',
+      topic: 'football',
+      author: 'happyamy2016',
+      body:
+        'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
+      created_at: 1472144905177,
+    },];
+    formatDates(input);
+    expect(input).toEqual([{
+      title: 'Who Will Manage Your Club in 2021?',
+      topic: 'football',
+      author: 'happyamy2016',
+      body:
+        'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
+      created_at: 1472144905177,
+    },]);
+  })
+  test('reformats the date', () => {
+    const input = [{
+      title: 'Who Will Manage Your Club in 2021?',
+      topic: 'football',
+      author: 'happyamy2016',
+      body:
+        'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
+      created_at: 1472144905177,
+    },];
+    const formattedInput = formatDates(input);
+    expect(typeof formattedInput[0].created_at).not.toEqual('number');
+    expect(typeof formattedInput[0].created_at).toEqual('object');
+    expect(formattedInput[0].created_at).toEqual(new Date(input[0].created_at));
+  })
 })
-test('reformats the date', () => {
-  const input = [{
-    title: 'Who Will Manage Your Club in 2021?',
-    topic: 'football',
-    author: 'happyamy2016',
-    body:
-      'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
-    created_at: 1472144905177,
-  },];
-  const formattedInput = formatDates(input);
-  expect(typeof formattedInput[0].created_at).not.toEqual('number');
-  expect(typeof formattedInput[0].created_at).toEqual('object');
-  expect(formattedInput[0].created_at).toEqual(new Date(input[0].created_at));
-})
-
 describe('makeRefObj', () => {
   test('returns an empty object, when passed an empty array', () => {
     const list = [];
