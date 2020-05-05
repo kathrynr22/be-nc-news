@@ -59,8 +59,20 @@ test('reformats the date', () => {
   expect(formattedInput[0].created_at).toEqual(new Date(input[0].created_at));
 })
 
+describe('makeRefObj', () => {
+  test('returns an empty object, when passed an empty array', () => {
+    const list = [];
+    const actual = makeRefObj(list);
+    const expected = {};
+    expect(actual).toEqual(expected);
+  });
+  // test('it does not mutate the original input', () => {
+  //   const input = [];
+  //   makeRefObj(input, “name”, “phoneNumber”);
+  //   expect(input).toEqual([]);
+  // });
 
+});
 
-describe('makeRefObj', () => { });
 
 describe('formatComments', () => { });

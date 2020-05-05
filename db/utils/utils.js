@@ -29,7 +29,20 @@ exports.formatDates = list => {
 
 // ---
 
-exports.makeRefObj = list => { };
+// const createRef = (people, stringKey, stringProp) => {
+//   let refObj = {};
+//   people.forEach((person) => (refObj[person[stringKey]] = person[stringProp]));
+//   //console.log(refObj[person][stringKey])
+//   return refObj;
+// };
+
+exports.makeRefObj = (list, stringKey, stringProp) => {
+
+  let refObj = {};
+  list.forEach((article) => (refObj[article[stringKey]] = article[stringProp]));
+  return refObj;
+
+};
 
 // This utility function should be able to take an array of comment objects(`comments`) and a reference object, and return a new array of formatted comments.
 
