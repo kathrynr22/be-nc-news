@@ -2,17 +2,18 @@
 
 //   _hint: Think carefully about how you can test that this has worked - it's not by copying and pasting a sql timestamp from the terminal into your test_
 
-//NB MAY HAVE TO REARRANGE IN RIGHT ORDER NOT SURE IF IT WILL WORK IN THIS ORDER TRY AND SEE
+//NB this does not return the property names in the exact same order as they are in the raw data but not sure this matters
 
 exports.formatDates = list => {
 
   const newArray = list.map(obj => ({
     title: obj.title,
-    body: obj.body,
-    votes: obj.votes,
     topic: obj.topic,
     author: obj.author,
+    body: obj.body,
     created_at: new Date(obj.created_at),
+    votes: obj.votes,
+
   }));
   return newArray;
 };

@@ -1,3 +1,5 @@
+//const connection = require('../connection');
+
 const {
   formatDates,
   makeRefObj,
@@ -17,6 +19,32 @@ describe('formatDates', () => {
     expect(formatDates(input)).not.toBe(input)
   })
 });
+test('it does not mutate the original input testing an empty array', () => {
+  const input = [];
+  formatDates(input);
+  expect(input).toEqual([]);
+});
+
+test('it does not mutate the original input testing actual data', () => {
+  const input = [{
+    title: 'Who Will Manage Your Club in 2021?',
+    topic: 'football',
+    author: 'happyamy2016',
+    body:
+      'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
+    created_at: 1472144905177,
+  },];
+  formatDates(input);
+  expect(input).toEqual([{
+    title: 'Who Will Manage Your Club in 2021?',
+    topic: 'football',
+    author: 'happyamy2016',
+    body:
+      'Managerial changes are too common in the modern day game. Already in the 16/17 season, we have seen 14 managers lose their job from the Premier League to League Two. Swansea’s Francesco Guidolin became the first top division manager to lose his job but already question marks are raised regarding the future of the likes of David Moyes and Mike Phelan.',
+    created_at: 1472144905177,
+  },]);
+});
+
 
 describe('makeRefObj', () => { });
 
