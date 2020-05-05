@@ -55,18 +55,25 @@ describe('/api', () => {
       })
     })
   })
-  // describe('/users', () => {
-  //   describe('GET', () => {
-  //     test('status: 200 responds with a user object with username, avatar_url and name properties', () => {
-  //       return request(app)
-  //         .get('/api/topics')
-  //         .expect(200)
-  //         .then(({ body }) => {
-  //           console.log(body)
-  //           expect(Array.isArray(body.topics)).toBe(true)
-  //           expect(body.topics.length).toBe(3)
-  //         })
-  //     })
-  //   })
-})
+  describe.only('/users', () => {
+    describe('/:username', () => {
+      describe('GET', () => {
+        test('status: 200 responds with the requested username object', () => {
+          return request(app)
+            .get('/api/users/lurker')
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body)
+              expect(body).toEqual({
+                username: 'lurker',
+                name: 'do_nothing',
+                avatar_url:
+                  'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
+              })
 
+            })
+        })
+      })
+    })
+  })
+})
