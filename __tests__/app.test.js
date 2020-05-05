@@ -7,6 +7,16 @@ beforeEach(() => connection.seed.run())
 afterAll(() => connection.destroy())
 
 describe('/api', () => {
+  describe('status 404', () => {
+    test('status 404: missing route', () => {
+      return request(app)
+        .get('/api/nowhere')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('resource not found');
+        })
+    })
+  })
   describe('/topics', () => {
     describe('GET', () => {
       test('status: 200 responds with an array of topic objects', () => {
@@ -45,5 +55,18 @@ describe('/api', () => {
       })
     })
   })
+  // describe('/users', () => {
+  //   describe('GET', () => {
+  //     test('status: 200 responds with a user object with username, avatar_url and name properties', () => {
+  //       return request(app)
+  //         .get('/api/topics')
+  //         .expect(200)
+  //         .then(({ body }) => {
+  //           console.log(body)
+  //           expect(Array.isArray(body.topics)).toBe(true)
+  //           expect(body.topics.length).toBe(3)
+  //         })
+  //     })
+  //   })
 })
 
