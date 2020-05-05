@@ -78,4 +78,18 @@ describe('makeRefObj', () => {
   });
 })
 
-describe('formatComments', () => { });
+describe('formatComments', () => {
+  test('returns an empty array when passed an empty array', () => {
+    expect(formatComments([])).toEqual([]);
+  })
+  test('returns a new array', () => {
+    const input = [];
+    expect(formatComments(input)).not.toBe(input)
+  })
+});
+test('it does not mutate the original input testing an empty array', () => {
+  const input = [];
+  formatComments(input);
+  expect(input).toEqual([]);
+});
+

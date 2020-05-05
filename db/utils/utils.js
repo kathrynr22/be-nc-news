@@ -54,4 +54,26 @@ exports.makeRefObj = (list, stringKey, stringProp) => {
 //       - Its`created_at` value converted into a javascript date object
 //         - The rest of the comment's properties must be maintained
 
-exports.formatComments = (comments, articleRef) => { };
+// exports.formatShopData = (shopData, lookupObj, keyToChange, keyToCreate) => {
+//   const formattedShops = shopData.map((shop) => {
+//     const { [keyToChange]: key, ...restOfKeys } = shop;
+//     return { [keyToCreate]: lookupObj[key], ...restOfKeys };
+//   });
+//   return formattedShops;
+// };
+
+exports.formatComments = (comments, articleRef) => {
+
+  return comments.map(comment => {
+
+    const newArray = { ...comment };
+
+    newArray.article_id = articleRef[comment.belongs_to];
+    delete newArray.belongs_to;
+    newArray.created_at = new Date(newArray.created_at);
+    newArray.author = newArray.created_by;
+    delete newArray.created_by;
+    return newArray;
+  });
+};
+
