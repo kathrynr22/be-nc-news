@@ -1,4 +1,4 @@
-const connection = require('../db/connection')
+const knex = require('../db/connection')
 
 exports.selectTopics = () => {
   console.log('inside select topics models')
