@@ -66,13 +66,16 @@ describe('makeRefObj', () => {
     const expected = {};
     expect(actual).toEqual(expected);
   });
-  // test('it does not mutate the original input', () => {
-  //   const input = [];
-  //   makeRefObj(input, “name”, “phoneNumber”);
-  //   expect(input).toEqual([]);
-  // });
-
-});
-
+  test('it does not mutate the original input', () => {
+    const list = [];
+    makeRefObj(list, 'article_id', 'title');
+    expect(list).toEqual([]);
+  });
+  test('it creates a reference object', () => {
+    const list =
+      [{ article_id: 1, title: 'A' }];
+    expect(makeRefObj(list, 'title', 'article_id')).toEqual({ A: 1 })
+  });
+})
 
 describe('formatComments', () => { });
