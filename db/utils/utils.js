@@ -29,12 +29,6 @@ exports.formatDates = list => {
 
 // ---
 
-// const createRef = (people, stringKey, stringProp) => {
-//   let refObj = {};
-//   people.forEach((person) => (refObj[person[stringKey]] = person[stringProp]));
-//   //console.log(refObj[person][stringKey])
-//   return refObj;
-// };
 
 exports.makeRefObj = (list, stringKey, stringProp) => {
 
@@ -53,14 +47,6 @@ exports.makeRefObj = (list, stringKey, stringProp) => {
 //     - The value of the new `article_id` key must be the id corresponding to the original title value provided
 //       - Its`created_at` value converted into a javascript date object
 //         - The rest of the comment's properties must be maintained
-
-// exports.formatShopData = (shopData, lookupObj, keyToChange, keyToCreate) => {
-//   const formattedShops = shopData.map((shop) => {
-//     const { [keyToChange]: key, ...restOfKeys } = shop;
-//     return { [keyToCreate]: lookupObj[key], ...restOfKeys };
-//   });
-//   return formattedShops;
-// };
 
 exports.formatComments = (comments, articleRef) => {
 
