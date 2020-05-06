@@ -2,7 +2,7 @@ const knex = require('../db/connection')
 
 exports.selectArticle = (article_id) => {
 
-  console.log('inside the articles models')
+  console.log('inside the selectArticle model')
 
   return knex
     .select("articles.*")
@@ -24,6 +24,8 @@ exports.selectArticle = (article_id) => {
 
 exports.updateArticleById = (article_id, inc_votes) => {
 
+  console.log('inside the updateArticleById model')
+
   return knex('articles')
     .where('article_id', article_id)
     .increment('votes', inc_votes)
@@ -37,7 +39,34 @@ exports.updateArticleById = (article_id, inc_votes) => {
     })
 }
 
+exports.sendPostedComment = (article_id, body, username) => {
 
 
-//.where('article_id', '=', article_id)
-// add || 0 after inc_votes?
+  console.log('inside the sendPostedComment model')
+
+  let date = new Date()
+
+  return knex('comments')
+    .where('article_id', article_id)
+    .insert([{
+      author: username,
+      body: body,
+      article_id: article_id,
+      created_at: date,
+    },
+    ])
+    .returning('*')
+  // .then((comment) => {
+  //   console.log(comment)
+  //   if (comment.length === 0)
+  //     return Promise.reject({ status: 404, msg: 'article_id not found' })
+  //   else {
+  //     return comment
+  //   }
+  // })
+}
+
+
+
+// //.where('article_id', '=', article_id)
+// // add || 0 after inc_votes?

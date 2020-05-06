@@ -130,60 +130,77 @@ describe('/api', () => {
             })
         })
       })
-    })
-    describe.only('PATCH', () => {
-      test('responds with the updated article incremented', () => {
-        return request(app)
-          .patch('/api/articles/1')
-          .send({ inc_votes: 1 })
-          .expect(200)
-          .then(({ body }) => {
-            console.log('inside the patch test')
-            console.log(body.article[0].votes)
-            expect(body.article[0].votes).toEqual(101);
-          });
-      });
-      test('responds with the updated article decremented', () => {
-        return request(app)
-          .patch('/api/articles/1')
-          .send({ inc_votes: -1 })
-          .expect(200)
-          .then(({ body }) => {
-            console.log('inside the patch test')
-            console.log(body.article[0].votes)
-            expect(body.article[0].votes).toEqual(99);
-          });
-      });
-      test('status 404: trying to patch a non-existent article_id', () => {
-        return request(app)
-          .patch('/api/articles/76666666')
-          .send({ inc_votes: 1 })
-          .expect(404)
-          .then(({ body: { msg } }) => {
-            expect(msg).toBe('article_id not found');
-          })
-      })
-      test('status 400: trying to patch to an invalid article_id', () => {
-        return request(app)
-          .patch('/api/articles/notAnInt')
-          .send({ inc_votes: 1 })
-          .expect(400)
-          .then(({ body: { msg } }) => {
-            expect(msg).toBe('bad request');
-          })
-      })
-      test('status 400: trying to patch something invalid', () => {
-        return request(app)
-          .patch('/api/articles/1')
-          .send({ inc_votes: 'notAnInt' })
-          .expect(400)
-          .then(({ body: { msg } }) => {
-            expect(msg).toBe('bad request');
-          })
-      })
 
-    })
+      describe('PATCH', () => {
+        test('responds with the updated article incremented', () => {
+          return request(app)
+            .patch('/api/articles/1')
+            .send({ inc_votes: 1 })
+            .expect(200)
+            .then(({ body }) => {
+              console.log('inside the patch test')
+              console.log(body.article[0].votes)
+              expect(body.article[0].votes).toEqual(101);
+            });
+        });
+        test('responds with the updated article decremented', () => {
+          return request(app)
+            .patch('/api/articles/1')
+            .send({ inc_votes: -1 })
+            .expect(200)
+            .then(({ body }) => {
+              console.log('inside the patch test')
+              console.log(body.article[0].votes)
+              expect(body.article[0].votes).toEqual(99);
+            });
+        });
+        test('status 404: trying to patch a non-existent article_id', () => {
+          return request(app)
+            .patch('/api/articles/76666666')
+            .send({ inc_votes: 1 })
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('article_id not found');
+            })
+        })
+        test('status 400: trying to patch to an invalid article_id', () => {
+          return request(app)
+            .patch('/api/articles/notAnInt')
+            .send({ inc_votes: 1 })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
+        test('status 400: trying to patch something invalid', () => {
+          return request(app)
+            .patch('/api/articles/1')
+            .send({ inc_votes: 'notAnInt' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
 
+      })
+    })
+    describe('/:article_id/comments', () => {
+      describe('POST', () => {
+        test('status: 201 responds with the posted comment', () => {
+
+          return request(app)
+            .post('/api/articles/1/comments')
+            .expect(201)
+            .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
+            .then(({ body }) => {
+             // console.log('inside the patch test')
+             // console.log(body.comment)
+              expect(body.comment.body).toEqual('The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.');
+            });
+        });
+
+      })
+    })
 
 
   })
