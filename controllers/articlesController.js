@@ -2,8 +2,8 @@ const { selectArticleById, updateArticleById, sendPostedComment, selectCommentsB
 
 
 exports.getArticleById = (req, res, next) => {
-  console.log('inside the getArticle controller')
-  console.log(req.params)
+  //console.log('inside the getArticle controller')
+  //console.log(req.params)
   const { article_id } = req.params;
 
   selectArticleById(article_id)
@@ -22,8 +22,8 @@ exports.getArticleById = (req, res, next) => {
 };
 
 exports.patchArticlesById = (req, res, next) => {
-  console.log('inside the articles patch controller')
-  console.log(req.body)
+  //console.log('inside the articles patch controller')
+  //console.log(req.body)
   const { inc_votes } = req.body;
   const { article_id } = req.params;
 
@@ -50,7 +50,7 @@ exports.postCommentById = (req, res, next) => {
 
   sendPostedComment(article_id, body, username)
     .then((comment) => {
-      console.log('inside controllers then block')
+      //console.log('inside controllers then block')
       //console.log(comment[0])
       const commentObj = comment[0]
       res.status(201).send({ commentObj })
@@ -74,8 +74,8 @@ exports.getCommentsByArticleId = (req, res, next) => {
 
   selectCommentsByArticleId(article_id, sort_by, order)
     .then((comment) => {
-      console.log('inside the get comments controllers then block')
-      console.log(comment)
+      // console.log('inside the get comments controllers then block')
+      //console.log(comment)
       res.status(200).send({ comment })
     })
     .catch((err) => {
@@ -92,10 +92,11 @@ exports.getCommentsByArticleId = (req, res, next) => {
 exports.getArticles = (req, res, next) => {
   console.log('inside the getArticle controller')
 
+  const { sort_by } = req.query;
 
-  selectArticles()
+  selectArticles(sort_by)
     .then((articles) => {
-      console.log('inside getarticles controller then block')
+      console.log('inside getarticles controller then block hi')
       console.log(articles)
       //console.log(article[0])
       //const articleObj = article[0]

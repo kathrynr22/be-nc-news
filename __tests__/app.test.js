@@ -125,6 +125,25 @@ describe('/api', () => {
         return Promise.all(requests)
 
       })
+      test('status 200: by default, sorts the articles by the created_at column', () => {
+        return request(app)
+          .get('/api/articles/')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('inside the articles sort by created_at test')
+            console.log(articles)
+            expect(articles).toBeSortedBy('created_at', { ascending: true });
+          });
+      });
+      // test('status 200: sorts the comments by any valid column passed in as a query - test for votes query', () => {
+      //   return request(app)
+      //     .get('/api/articles/1/comments?sort_by=votes')
+      //     .expect(200)
+      //     .then(({ body: { comment } }) => {
+      //       expect(comment).toBeSortedBy('votes', { ascending: true });
+      //     });
+      // });
+
     })
     describe('/:article_id', () => {
       describe('GET', () => {

@@ -2,7 +2,7 @@ const knex = require('../db/connection')
 
 exports.selectArticleById = (article_id) => {
 
-  console.log('inside the selectArticle model')
+  //console.log('inside the selectArticle model')
 
   return knex
     .select('articles.*')
@@ -24,7 +24,7 @@ exports.selectArticleById = (article_id) => {
 
 exports.updateArticleById = (article_id, inc_votes) => {
 
-  console.log('inside the updateArticleById model')
+  //console.log('inside the updateArticleById model')
 
   return knex('articles')
     .where('article_id', article_id)
@@ -42,7 +42,7 @@ exports.updateArticleById = (article_id, inc_votes) => {
 exports.sendPostedComment = (article_id, body, username) => {
 
 
-  console.log('inside the sendPostedComment model')
+  //console.log('inside the sendPostedComment model')
 
   let date = new Date()
 
@@ -71,7 +71,7 @@ exports.sendPostedComment = (article_id, body, username) => {
 exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 
 
-  console.log('inside the selectcommentsbyarticleid model')
+  //console.log('inside the selectcommentsbyarticleid model')
 
   return knex
     .select('comment_id', 'votes', 'created_at', 'author', 'body')
@@ -97,7 +97,7 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 // // add || 0 after inc_votes?
 //.orderBy(sort_by || "created_at", order || "asc");
 
-exports.selectArticles = () => {
+exports.selectArticles = (sort_by) => {
 
   console.log('inside the selectArticle model')
 
@@ -107,6 +107,7 @@ exports.selectArticles = () => {
     .leftJoin('comments', 'articles.article_id', 'comments.article_id')
     .count('comments.article_id AS comment_count')
     .groupBy('articles.article_id')
+    .orderBy(sort_by || 'created_at')
     .then((article) => {
       if (article.length === 0)
         return Promise.reject({ status: 404, msg: 'article_id not found' })
