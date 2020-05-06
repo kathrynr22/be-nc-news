@@ -332,6 +332,22 @@ describe('/api', () => {
               expect(comment).toBeSortedBy('created_at', { descending: true });
             });
         });
+        test('status 404: trying to order comments for a non-existent article_id', () => {
+          return request(app)
+            .get('/api/articles/76666666/comments?order=desc')
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('article_id not found');
+            });
+        });
+        test('status 400: trying to order comments for an invalid article_id', () => {
+          return request(app)
+            .get('/api/articles/notAnInt/comments?order=desc')
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            });
+        });
 
 
       })
