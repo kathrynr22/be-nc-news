@@ -24,7 +24,6 @@ describe('/api', () => {
           .get('/api/topics')
           .expect(200)
           .then(({ body }) => {
-            console.log(body)
             expect(Array.isArray(body.topics)).toBe(true)
             expect(body.topics.length).toBe(3)
           })
@@ -92,9 +91,6 @@ describe('/api', () => {
             .get('/api/articles/1')
             .expect(200)
             .then(({ body: { articleObj } }) => {
-              console.log('inside the test')
-              //console.log(body.articleObj)
-              //articleObj.forEach((article) => {
               expect(articleObj).toHaveProperty('article_id')
               expect(articleObj).toHaveProperty('author')
               expect(articleObj).toHaveProperty('body')
@@ -193,10 +189,9 @@ describe('/api', () => {
             .expect(201)
             .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
             .then(({ body }) => {
-              console.log('inside the patch test')
-              console.log(body)
-              console.log(body.commentObj.body)
               expect(body.commentObj.body).toEqual('The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.');
+              expect(body.commentObj.article_id).toEqual(1)
+              expect(body.commentObj.author).toEqual('butter_bridge')
             });
         });
 
