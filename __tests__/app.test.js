@@ -273,24 +273,21 @@ describe('/api', () => {
               expect(msg).toBe('bad request');
             })
         })
-        // test("status 200: sorts the comments by any valid column ", () => {
-        //   return request(app)
-        //     .get('/api/articles/1/comments?sort_by=votes') //  let req.query = {sort_by: votes}
-        //     .expect(200)
-        //     .then(({ body }) => {
-        //       console.log('inside the sort by votes test')
-        //       console.log(body)
-
-        //       expect(body.comments).toBeSortedBy("votes", { ascending: true });
-        //     });
-        // });
-        test("status 200: sorts the comments by default by created_at column ", () => {
+        test('status 200: by default, sorts the comments by the created_at column ', () => {
           return request(app)
             .get('/api/articles/1/comments') //  let req.query = {sort_by: votes}
             .expect(200)
             .then(({ body: { comment } }) => {
               console.log('inside the sort by created_at test')
-              expect(comment).toBeSortedBy("created_at", { ascending: true });
+              expect(comment).toBeSortedBy('created_at', { ascending: true });
+            });
+        });
+        test('status 200: sorts the comments by any valid column passed in as a query - test for votes query', () => {
+          return request(app)
+            .get('/api/articles/1/comments?sort_by=votes') //  let req.query = {sort_by: votes}
+            .expect(200)
+            .then(({ body: { comment } }) => {
+              expect(comment).toBeSortedBy('votes', { ascending: true });
             });
         });
 
