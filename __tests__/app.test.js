@@ -95,22 +95,23 @@ describe('/api', () => {
             expect(Array.isArray(body.articles)).toBe(true)
           })
       })
-      // test('comment object contains certain properties', () => {
-      //   return request(app)
-      //     .get('/api/articles/1/comments')
-      //     .expect(200)
-      //     .then(({ body }) => {
-      //       body.comment.forEach((comment) => {
-      //         expect(comment).toHaveProperty('comment_id')
-      //         expect(comment).toHaveProperty('votes')
-      //         expect(comment).toHaveProperty('created_at')
-      //         expect(comment).toHaveProperty('author')
-      //         expect(comment).toHaveProperty('body')
-
-      //       })
-      //     })
-      //})
-      //})
+      test('each article object contains certain properties', () => {
+        return request(app)
+          .get('/api/articles/')
+          .expect(200)
+          .then(({ body }) => {
+            console.log('inside the test articles property')
+            console.log(body)
+            body.articles.forEach((article) => {
+              expect(article).toHaveProperty('author')
+              expect(article).toHaveProperty('created_at')
+              expect(article).toHaveProperty('comment_count')
+              expect(article).toHaveProperty('title')
+              expect(article).toHaveProperty('topic')
+              expect(article).toHaveProperty('votes')
+            })
+          })
+      })
     })
     describe('/:article_id', () => {
       describe('GET', () => {
