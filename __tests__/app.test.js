@@ -168,7 +168,7 @@ describe('/api', () => {
               expect(msg).toBe('bad request');
             })
         })
-        test('status 400: trying to patch something invalid', () => {
+        test('status 400: trying to patch something invalid ie not incrementing or decrementing a vote', () => {
           return request(app)
             .patch('/api/articles/1')
             .send({ inc_votes: 'notAnInt' })
@@ -194,7 +194,16 @@ describe('/api', () => {
               expect(body.commentObj.author).toEqual('butter_bridge')
             });
         });
-        test('status 400: trying to comment on a non-existent article_id', () => {
+        test('status 400: trying to comment on an invalid article_id not a number', () => {
+          return request(app)
+            .post('/api/articles/notAnInt/comments')
+            .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
+        test('status 400: trying to comment on an invalid article_id article does not exist in articles table', () => {
           return request(app)
             .post('/api/articles/76666666/comments')
             .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
