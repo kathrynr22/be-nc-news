@@ -102,11 +102,10 @@ exports.selectArticles = () => {
   console.log('inside the selectArticle model')
 
   return knex
-    .select('articles.*')
+    .select('articles.author', 'title', 'articles.article_id', 'topic', 'articles.created_at', 'articles.votes')
     .from('articles')
     .leftJoin('comments', 'articles.article_id', 'comments.article_id')
     .count('comments.article_id AS comment_count')
-    //.where("articles.article_id", "=", article_id)
     .groupBy('articles.article_id')
     .then((article) => {
       if (article.length === 0)
