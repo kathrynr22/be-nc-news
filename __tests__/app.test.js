@@ -71,12 +71,12 @@ describe('/api', () => {
               })
             })
         })
-        test('status 400: invalid username', () => {
+        test('status 404: non-existent username', () => {
           return request(app)
-            .get('/api/users/u5er')
-            .expect(400)
+            .get('/api/users/kathryn')
+            .expect(404)
             .then(({ body: { msg } }) => {
-              expect(msg).toBe('bad request');
+              expect(msg).toBe('username not found');
             })
         })
       })
