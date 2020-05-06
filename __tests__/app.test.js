@@ -306,6 +306,22 @@ describe('/api', () => {
               expect(comment).toBeSortedBy('author', { ascending: true });
             });
         });
+        test('status 404: trying to sort comments for a non-existent article_id', () => {
+          return request(app)
+            .get('/api/articles/76666666/comments?sort_by=author')
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('article_id not found');
+            });
+        });
+        test('status 400: trying to sort comments for an invalid article_id', () => {
+          return request(app)
+            .get('/api/articles/notAnInt/comments?sort_by=author')
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            });
+        });
         test('status 200: accepts an order by query that sorts the comments by descending order', () => {
           return request(app)
             .get('/api/articles/1/comments?order=desc')
