@@ -166,12 +166,21 @@ describe('/api', () => {
       test('status 400: trying to patch to an invalid article_id', () => {
         return request(app)
           .patch('/api/articles/notAnInt')
+          .send({ inc_votes: 1 })
           .expect(400)
           .then(({ body: { msg } }) => {
             expect(msg).toBe('bad request');
           })
       })
-
+      test('status 400: trying to patch something invalid', () => {
+        return request(app)
+          .patch('/api/articles/1')
+          .send({ inc_votes: 'notAnInt' })
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('bad request');
+          })
+      })
 
     })
 
