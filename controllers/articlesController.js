@@ -31,6 +31,10 @@ exports.patchArticlesById = (req, res, next) => {
     .then((article) => {
       res.send({ article })
     })
-    .catch(next)
+    .catch((err) => {
+      next(err)
+    })
+
+  //.catch(next)
 
 }

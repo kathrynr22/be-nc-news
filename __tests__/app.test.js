@@ -132,7 +132,7 @@ describe('/api', () => {
       })
     })
     describe.only('PATCH', () => {
-      test('responds with the updated article', () => {
+      test('responds with the updated article incremented', () => {
         return request(app)
           .patch('/api/articles/1')
           .send({ inc_votes: 1 })
@@ -143,6 +143,26 @@ describe('/api', () => {
             expect(body.article[0].votes).toEqual(101);
           });
       });
+      test('responds with the updated article decremented', () => {
+        return request(app)
+          .patch('/api/articles/1')
+          .send({ inc_votes: -1 })
+          .expect(200)
+          .then(({ body }) => {
+            console.log('inside the patch test')
+            console.log(body.article[0].votes)
+            expect(body.article[0].votes).toEqual(99);
+          });
+      });
+      test('status 404: non-existent article_id', () => {
+        return request(app)
+          .patch('/api/articles/76666666')
+          .send({ inc_votes: 1 })
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('article_id not found');
+          })
+      })
 
 
     })

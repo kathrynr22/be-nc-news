@@ -25,8 +25,19 @@ exports.selectArticle = (article_id) => {
 exports.updateArticleById = (article_id, inc_votes) => {
 
   return knex('articles')
-    .where('article_id', '=', article_id)
-    .increment('votes', inc_votes || 0)
-    .returning('*');
+    .where('article_id', article_id)
+    .increment('votes', inc_votes)
+    .returning('*')
+    .then((article) => {
+      if (article.length === 0)
+        return Promise.reject({ status: 404, msg: 'article_id not found' })
+      else {
+        return article
+      }
+    })
 }
 
+
+
+//.where('article_id', '=', article_id)
+// add || 0 after inc_votes?
