@@ -18,7 +18,7 @@ exports.selectArticle = (article_id) => {
         return article
       }
     })
-  //}
+
 
 }
 
@@ -66,7 +66,25 @@ exports.sendPostedComment = (article_id, body, username) => {
   // })
 }
 
+exports.selectCommentsByArticleId = (article_id) => {
 
+
+  console.log('inside the selectcommentsbyarticleid model')
+
+  return knex
+    .select('*')
+    .from('comments')
+    .where('article_id', article_id)
+    .returning('*')
+  // .then((comment) => {
+  //   console.log(comment)
+  //   if (comment.length === 0)
+  //     return Promise.reject({ status: 404, msg: 'article_id not found' })
+  //   else {
+  //     return comment
+  //   }
+  // })
+}
 
 // //.where('article_id', '=', article_id)
 // // add || 0 after inc_votes?

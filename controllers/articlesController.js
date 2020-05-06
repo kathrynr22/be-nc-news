@@ -1,4 +1,4 @@
-const { selectArticle, updateArticleById, sendPostedComment } = require('../models/articlesModels')
+const { selectArticle, updateArticleById, sendPostedComment, selectCommentsByArticleId } = require('../models/articlesModels')
 
 
 exports.getArticle = (req, res, next) => {
@@ -41,8 +41,8 @@ exports.patchArticlesById = (req, res, next) => {
 
 exports.postCommentById = (req, res, next) => {
   console.log('inside the post comment controller')
-  console.log(req.body.body)
-  console.log(req.body.username)
+  // console.log(req.body.body)
+  // console.log(req.body.username)
   const username = req.body.username;
   //const { body } = req.body.body;
   const { body } = req.body
@@ -51,9 +51,30 @@ exports.postCommentById = (req, res, next) => {
   sendPostedComment(article_id, body, username)
     .then((comment) => {
       console.log('inside controllers then block')
-      console.log(comment[0])
+      //console.log(comment[0])
       const commentObj = comment[0]
       res.status(201).send({ commentObj })
+    })
+    .catch((err) => {
+      next(err)
+    })
+
+
+
+  //.catch(next)
+
+}
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  console.log('inside the get comments controller')
+
+  const { article_id } = req.params;
+
+  selectCommentsByArticleId(article_id)
+    .then((comment) => {
+      console.log('inside the get comments controllers then block')
+      console.log(comment)
+      res.status(200).send({ comment })
     })
     .catch((err) => {
       next(err)
