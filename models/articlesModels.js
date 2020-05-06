@@ -72,10 +72,10 @@ exports.selectCommentsByArticleId = (article_id) => {
   console.log('inside the selectcommentsbyarticleid model')
 
   return knex
-    .select('*')
+    .select('comment_id', 'votes', 'created_at', 'author', 'body')
     .from('comments')
     .where('article_id', article_id)
-    .returning('*')
+  //.returning('comment_id', 'votes', 'created_at', 'author', 'body')
   // .then((comment) => {
   //   console.log(comment)
   //   if (comment.length === 0)

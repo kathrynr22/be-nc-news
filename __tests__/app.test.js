@@ -237,11 +237,24 @@ describe('/api', () => {
           return request(app)
             .get('/api/articles/1/comments')
             .expect(200)
-            .then((response) => {
+            .then(({ body }) => {
               console.log('inside the get comments test')
-              console.log(response.body.comment)
-              //console.log(body.text[0])
-              expect(Array.isArray(response.body.comment)).toBe(true)
+              expect(Array.isArray(body.comment)).toBe(true)
+            })
+        })
+        test('comment object contains certain properties', () => {
+          return request(app)
+            .get('/api/articles/1/comments')
+            .expect(200)
+            .then(({ body }) => {
+              body.comment.forEach((comment) => {
+                expect(comment).toHaveProperty('comment_id')
+                expect(comment).toHaveProperty('votes')
+                expect(comment).toHaveProperty('created_at')
+                expect(comment).toHaveProperty('author')
+                expect(comment).toHaveProperty('body')
+
+              })
             })
         })
 
