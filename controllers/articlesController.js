@@ -1,4 +1,4 @@
-const { selectArticleById, updateArticleById, sendPostedComment, selectCommentsByArticleId } = require('../models/articlesModels')
+const { selectArticleById, updateArticleById, sendPostedComment, selectCommentsByArticleId, selectArticles } = require('../models/articlesModels')
 
 
 exports.getArticleById = (req, res, next) => {
@@ -83,8 +83,29 @@ exports.getCommentsByArticleId = (req, res, next) => {
     })
 }
 
-    // .then((res) => console.log(res));
+// .then((res) => console.log(res));
 
 
+
+//.catch(next)
+
+exports.getArticles = (req, res, next) => {
+  console.log('inside the getArticle controller')
+
+
+  selectArticles()
+    .then((articles) => {
+      console.log('inside getarticles controller then block')
+      console.log(articles)
+      //console.log(article[0])
+      //const articleObj = article[0]
+      res.status(200)
+        .send({ articles })
+    })
+    .catch((err) => {
+      next(err)
+    })
 
   //.catch(next)
+
+};

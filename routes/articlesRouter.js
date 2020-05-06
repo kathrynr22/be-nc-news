@@ -3,7 +3,7 @@ const { getArticleById, patchArticlesById, postCommentById, getCommentsByArticle
 const { handle405s, handleCustomErrors } = require('../controllers/errorControllers');
 
 
-//articlesRouter.route('/articles').get(getArticles)
+articlesRouter.route('/').get(getArticles)
 
 articlesRouter.route('/:article_id').get(getArticleById).patch(patchArticlesById).get(handleCustomErrors).all(handle405s);
 

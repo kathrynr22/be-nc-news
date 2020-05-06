@@ -91,8 +91,29 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 
 
 
-     //JS treats undefined eg what sort_by could be as falsy which means that it has to choose between two values so if one of the values is falsy it choose the truthy value. So if sort_by is undefined it will default to cost_at_auction
+//JS treats undefined eg what sort_by could be as falsy which means that it has to choose between two values so if one of the values is falsy it choose the truthy value. So if sort_by is undefined it will default to cost_at_auction
 
 // //.where('article_id', '=', article_id)
 // // add || 0 after inc_votes?
 //.orderBy(sort_by || "created_at", order || "asc");
+
+exports.selectArticles = () => {
+
+  console.log('inside the selectArticle model')
+
+  return knex
+    .select("articles.*")
+    .from("articles")
+    .leftJoin("comments", "articles.article_id", "comments.article_id")
+    .count("comments.article_id AS comment_count")
+    //.where("articles.article_id", "=", article_id)
+    .groupBy("articles.article_id")
+    .then((article) => {
+      if (article.length === 0)
+        return Promise.reject({ status: 404, msg: 'article_id not found' })
+      else {
+        return article
+      }
+    })
+
+}

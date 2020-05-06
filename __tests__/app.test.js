@@ -84,7 +84,7 @@ describe('/api', () => {
 
   })
   describe('/articles', () => {
-    describe('GET', () => {
+    describe.only('GET', () => {
       test('status: 200 responds with an articles array of article objects', () => {
         return request(app)
           .get('/api/articles/')
