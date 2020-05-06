@@ -84,20 +84,31 @@ describe('/api', () => {
     })
 
   })
-  describe('/articles', () => {
+  describe.only('/articles', () => {
     describe('/:article_id', () => {
       describe('GET', () => {
         test('status: 200 responds with an article object', () => {
           return request(app)
-            .get('/api/articles/:article_id')
+            .get('/api/articles/1')
             .expect(200)
-            .then(({ body }) => {
-              console.log(body)
-              //expect(Array.isArray(body.topics)).toBe(true)
-              // expect(body.topics.length).toBe(3)
+            .then(({ body: { articleObj } }) => {
+              console.log('inside the test')
+              //console.log(body.articleObj)
+              //articleObj.forEach((article) => {
+              expect(articleObj).toHaveProperty('article_id')
+              expect(articleObj).toHaveProperty('author')
+              expect(articleObj).toHaveProperty('body')
+              expect(articleObj).toHaveProperty('created_at')
+              expect(articleObj).toHaveProperty('title')
+              expect(articleObj).toHaveProperty('votes')
             })
         })
       })
+
+
+
     })
   })
 })
+//})
+
