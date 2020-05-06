@@ -194,6 +194,15 @@ describe('/api', () => {
               expect(body.commentObj.author).toEqual('butter_bridge')
             });
         });
+        test('status 400: trying to comment on a non-existent article_id', () => {
+          return request(app)
+            .post('/api/articles/76666666/comments')
+            .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
 
       })
     })
