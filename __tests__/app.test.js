@@ -232,7 +232,7 @@ describe('/api', () => {
         })
 
       })
-      describe('GET', () => {
+      describe.only('GET', () => {
         test('status 200: responds with an array of comment objects', () => {
           return request(app)
             .get('/api/articles/1/comments')
@@ -288,6 +288,14 @@ describe('/api', () => {
             .expect(200)
             .then(({ body: { comment } }) => {
               expect(comment).toBeSortedBy('votes', { ascending: true });
+            });
+        });
+        test('status 200: sorts the comments by any valid column passed in as a query - test for comment_id query', () => {
+          return request(app)
+            .get('/api/articles/1/comments?sort_by=comment_id') //  let req.query = {sort_by: votes}
+            .expect(200)
+            .then(({ body: { comment } }) => {
+              expect(comment).toBeSortedBy('comment_id', { ascending: true, coerce: true });
             });
         });
 
