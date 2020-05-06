@@ -79,8 +79,25 @@ describe('/api', () => {
               expect(msg).toBe('username not found');
             })
         })
+
       })
     })
 
+  })
+  describe('/articles', () => {
+    describe('/:article_id', () => {
+      describe('GET', () => {
+        test('status: 200 responds with an article object', () => {
+          return request(app)
+            .get('/api/articles/:article_id')
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body)
+              //expect(Array.isArray(body.topics)).toBe(true)
+              // expect(body.topics.length).toBe(3)
+            })
+        })
+      })
+    })
   })
 })
