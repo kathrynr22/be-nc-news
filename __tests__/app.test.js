@@ -233,7 +233,7 @@ describe('/api', () => {
 
       })
       describe('GET', () => {
-        test('status: 200 responds with an array of comment objects', () => {
+        test('status 200: responds with an array of comment objects', () => {
           return request(app)
             .get('/api/articles/1/comments')
             .expect(200)
@@ -273,6 +273,26 @@ describe('/api', () => {
               expect(msg).toBe('bad request');
             })
         })
+        // test("status 200: sorts the comments by any valid column ", () => {
+        //   return request(app)
+        //     .get('/api/articles/1/comments?sort_by=votes') //  let req.query = {sort_by: votes}
+        //     .expect(200)
+        //     .then(({ body }) => {
+        //       console.log('inside the sort by votes test')
+        //       console.log(body)
+
+        //       expect(body.comments).toBeSortedBy("votes", { ascending: true });
+        //     });
+        // });
+        test("status 200: sorts the comments by default by created_at column ", () => {
+          return request(app)
+            .get('/api/articles/1/comments') //  let req.query = {sort_by: votes}
+            .expect(200)
+            .then(({ body: { comment } }) => {
+              console.log('inside the sort by created_at test')
+              expect(comment).toBeSortedBy("created_at", { ascending: true });
+            });
+        });
 
       })
     })

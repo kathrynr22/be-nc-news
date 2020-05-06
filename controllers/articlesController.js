@@ -69,8 +69,9 @@ exports.getCommentsByArticleId = (req, res, next) => {
   console.log('inside the get comments controller')
 
   const { article_id } = req.params;
+  const { sort_by } = req.query;
 
-  selectCommentsByArticleId(article_id)
+  selectCommentsByArticleId(article_id, sort_by)
     .then((comment) => {
       console.log('inside the get comments controllers then block')
       console.log(comment)
@@ -79,9 +80,10 @@ exports.getCommentsByArticleId = (req, res, next) => {
     .catch((err) => {
       next(err)
     })
+}
+
+    // .then((res) => console.log(res));
 
 
 
   //.catch(next)
-
-}

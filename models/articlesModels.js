@@ -66,7 +66,9 @@ exports.sendPostedComment = (article_id, body, username) => {
   // })
 }
 
-exports.selectCommentsByArticleId = (article_id) => {
+//wouldnt let me do promise.reject and send 404 kept returning 500 and psql
+
+exports.selectCommentsByArticleId = (article_id, sort_by) => {
 
 
   console.log('inside the selectcommentsbyarticleid model')
@@ -75,7 +77,7 @@ exports.selectCommentsByArticleId = (article_id) => {
     .select('comment_id', 'votes', 'created_at', 'author', 'body')
     .from('comments')
     .where('article_id', article_id)
-
+    .orderBy(sort_by || 'created_at')
     .then((comment) => {
       console.log(comment)
       if (comment.length === 0)
@@ -86,5 +88,11 @@ exports.selectCommentsByArticleId = (article_id) => {
     })
 }
 
+
+
+
+     //JS treats undefined eg what sort_by could be as falsy which means that it has to choose between two values so if one of the values is falsy it choose the truthy value. So if sort_by is undefined it will default to cost_at_auction
+
 // //.where('article_id', '=', article_id)
 // // add || 0 after inc_votes?
+//.orderBy(sort_by || "created_at", order || "asc");
