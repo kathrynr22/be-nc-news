@@ -121,6 +121,14 @@ describe('/api', () => {
               expect(msg).toBe('article_id not found');
             })
         })
+        test('status 400: invalid article_id', () => {
+          return request(app)
+            .get('/api/articles/notAnInt')
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
       })
     })
 
