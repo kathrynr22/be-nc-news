@@ -154,13 +154,21 @@ describe('/api', () => {
             expect(body.article[0].votes).toEqual(99);
           });
       });
-      test('status 404: non-existent article_id', () => {
+      test('status 404: trying to patch a non-existent article_id', () => {
         return request(app)
           .patch('/api/articles/76666666')
           .send({ inc_votes: 1 })
           .expect(404)
           .then(({ body: { msg } }) => {
             expect(msg).toBe('article_id not found');
+          })
+      })
+      test('status 400: trying to patch to an invalid article_id', () => {
+        return request(app)
+          .patch('/api/articles/notAnInt')
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('bad request');
           })
       })
 
