@@ -257,6 +257,22 @@ describe('/api', () => {
               })
             })
         })
+        test('status 404: trying to get comments for an invalid article_id', () => {
+          return request(app)
+            .get('/api/articles/76666666/comments')
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('article_id not found');
+            })
+        })
+        test('status 400: trying to get comments for an invalid article_id not a number', () => {
+          return request(app)
+            .get('/api/articles/notAnInt/comments')
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
 
       })
     })

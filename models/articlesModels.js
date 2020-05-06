@@ -75,15 +75,15 @@ exports.selectCommentsByArticleId = (article_id) => {
     .select('comment_id', 'votes', 'created_at', 'author', 'body')
     .from('comments')
     .where('article_id', article_id)
-  //.returning('comment_id', 'votes', 'created_at', 'author', 'body')
-  // .then((comment) => {
-  //   console.log(comment)
-  //   if (comment.length === 0)
-  //     return Promise.reject({ status: 404, msg: 'article_id not found' })
-  //   else {
-  //     return comment
-  //   }
-  // })
+
+    .then((comment) => {
+      console.log(comment)
+      if (comment.length === 0)
+        return Promise.reject({ status: 404, msg: 'article_id not found' })
+      else {
+        return comment
+      }
+    })
 }
 
 // //.where('article_id', '=', article_id)
