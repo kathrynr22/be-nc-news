@@ -193,9 +193,10 @@ describe('/api', () => {
             .expect(201)
             .send({ username: 'butter_bridge', body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
             .then(({ body }) => {
-             // console.log('inside the patch test')
-             // console.log(body.comment)
-              expect(body.comment.body).toEqual('The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.');
+              console.log('inside the patch test')
+              console.log(body)
+              console.log(body.commentObj.body)
+              expect(body.commentObj.body).toEqual('The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.');
             });
         });
 
