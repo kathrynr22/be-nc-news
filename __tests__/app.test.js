@@ -103,12 +103,23 @@ describe('/api', () => {
               expect(articleObj).toHaveProperty('votes')
             })
         })
+        test('status: 200 responds with the specific requested article', () => {
+          return request(app)
+            .get('/api/articles/1')
+            .expect(200)
+            .then(({ body: { articleObj } }) => {
+              console.log('inside the second test')
+              expect(articleObj.article_id).toEqual(1);
+
+            })
+        })
       })
-
-
-
     })
+
+
+
   })
 })
-//})
+
+
 
