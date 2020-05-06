@@ -91,7 +91,8 @@ describe('/api', () => {
           .expect(200)
           .then(({ body }) => {
             console.log('inside the get comments test')
-            expect(Array.isArray(body.comment)).toBe(true)
+            console.log(body.articles)
+            expect(Array.isArray(body.articles)).toBe(true)
           })
       })
       // test('comment object contains certain properties', () => {
