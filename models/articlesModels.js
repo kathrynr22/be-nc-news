@@ -68,7 +68,7 @@ exports.sendPostedComment = (article_id, body, username) => {
 
 //wouldnt let me do promise.reject and send 404 kept returning 500 and psql
 
-exports.selectCommentsByArticleId = (article_id, sort_by) => {
+exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 
 
   console.log('inside the selectcommentsbyarticleid model')
@@ -77,7 +77,7 @@ exports.selectCommentsByArticleId = (article_id, sort_by) => {
     .select('comment_id', 'votes', 'created_at', 'author', 'body')
     .from('comments')
     .where('article_id', article_id)
-    .orderBy(sort_by || 'created_at')
+    .orderBy(sort_by || 'created_at', order || 'asc')
     .then((comment) => {
       console.log(comment)
       if (comment.length === 0)

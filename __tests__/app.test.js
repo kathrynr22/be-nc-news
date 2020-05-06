@@ -306,6 +306,17 @@ describe('/api', () => {
               expect(comment).toBeSortedBy('author', { ascending: true });
             });
         });
+        test('status 200: accepts an order by query that sorts the comments by descending order', () => {
+          return request(app)
+            .get('/api/articles/1/comments?order=desc')
+            .expect(200)
+            .then(({ body: { comment } }) => {
+              console.log('inside the sort by asc test')
+              console.log('comment')
+              expect(comment).toBeSortedBy('created_at', { descending: true });
+            });
+        });
+
 
       })
     })
