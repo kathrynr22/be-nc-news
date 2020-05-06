@@ -84,7 +84,7 @@ describe('/api', () => {
     })
 
   })
-  describe.only('/articles', () => {
+  describe('/articles', () => {
     describe('/:article_id', () => {
       describe('GET', () => {
         test('status: 200 responds with an article object', () => {
@@ -130,6 +130,21 @@ describe('/api', () => {
             })
         })
       })
+    })
+    describe.only('PATCH', () => {
+      test('responds with the updated article', () => {
+        return request(app)
+          .patch('/api/articles/1')
+          .send({ inc_votes: 1 })
+          .expect(200)
+          .then(({ body }) => {
+            console.log('inside the patch test')
+            console.log(body.article[0].votes)
+            expect(body.article[0].votes).toEqual(101);
+          });
+      });
+
+
     })
 
 
