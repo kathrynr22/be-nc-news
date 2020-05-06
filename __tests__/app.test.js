@@ -112,6 +112,19 @@ describe('/api', () => {
             })
           })
       })
+      test('invalid methods', () => {
+        const invalidMethods = ['patch', 'post', 'delete'];
+        const requests = invalidMethods.map((method) => {
+          return request(app)
+          [method]('/api/articles')
+            .expect(405)
+            .then((res) => {
+              expect(res.body.msg).toBe('method not allowed')
+            })
+        })
+        return Promise.all(requests)
+
+      })
     })
     describe('/:article_id', () => {
       describe('GET', () => {
