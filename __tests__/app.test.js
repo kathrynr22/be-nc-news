@@ -237,10 +237,11 @@ describe('/api', () => {
           return request(app)
             .get('/api/articles/1/comments')
             .expect(200)
-            .then((body) => {
+            .then((response) => {
               console.log('inside the get comments test')
-              console.log(body)
-              expect(Array.isArray(body)).toBe(true)
+              console.log(response.body.comment)
+              //console.log(body.text[0])
+              expect(Array.isArray(response.body.comment)).toBe(true)
             })
         })
 
