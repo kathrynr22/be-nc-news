@@ -212,6 +212,24 @@ describe('/api', () => {
               expect(msg).toBe('bad request');
             })
         })
+        test('status 400: trying to comment anonymously', () => {
+          return request(app)
+            .post('/api/articles/1/comments')
+            .send({ body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
+        test('status 400: trying to post a blank comment', () => {
+          return request(app)
+            .post('/api/articles/1/comments')
+            .send({ username: 'butter_bridge' })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('bad request');
+            })
+        })
 
       })
     })
