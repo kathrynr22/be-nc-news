@@ -1,12 +1,12 @@
-const { selectArticle, updateArticleById, sendPostedComment, selectCommentsByArticleId } = require('../models/articlesModels')
+const { selectArticleById, updateArticleById, sendPostedComment, selectCommentsByArticleId } = require('../models/articlesModels')
 
 
-exports.getArticle = (req, res, next) => {
+exports.getArticleById = (req, res, next) => {
   console.log('inside the getArticle controller')
   console.log(req.params)
   const { article_id } = req.params;
 
-  selectArticle(article_id)
+  selectArticleById(article_id)
     .then((article) => {
       //console.log(article[0])
       const articleObj = article[0]

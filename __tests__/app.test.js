@@ -84,6 +84,33 @@ describe('/api', () => {
 
   })
   describe('/articles', () => {
+    describe('GET', () => {
+      test('status: 200 responds with an articles array of article objects', () => {
+        return request(app)
+          .get('/api/articles/')
+          .expect(200)
+          .then(({ body }) => {
+            console.log('inside the get comments test')
+            expect(Array.isArray(body.comment)).toBe(true)
+          })
+      })
+      // test('comment object contains certain properties', () => {
+      //   return request(app)
+      //     .get('/api/articles/1/comments')
+      //     .expect(200)
+      //     .then(({ body }) => {
+      //       body.comment.forEach((comment) => {
+      //         expect(comment).toHaveProperty('comment_id')
+      //         expect(comment).toHaveProperty('votes')
+      //         expect(comment).toHaveProperty('created_at')
+      //         expect(comment).toHaveProperty('author')
+      //         expect(comment).toHaveProperty('body')
+
+      //       })
+      //     })
+      //})
+      //})
+    })
     describe('/:article_id', () => {
       describe('GET', () => {
         test('status: 200 responds with an article object', () => {
@@ -232,7 +259,7 @@ describe('/api', () => {
         })
 
       })
-      describe.only('GET', () => {
+      describe('GET', () => {
         test('status 200: responds with an array of comment objects', () => {
           return request(app)
             .get('/api/articles/1/comments')

@@ -1,6 +1,6 @@
 const knex = require('../db/connection')
 
-exports.selectArticle = (article_id) => {
+exports.selectArticleById = (article_id) => {
 
   console.log('inside the selectArticle model')
 
