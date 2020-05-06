@@ -11,9 +11,11 @@ exports.selectUsername = (username) => {
       if (user.length === 0)
         return Promise.reject({ status: 404, msg: 'username not found' })
       else {
-        return knex.select('*').from('users').where('username', username)
+        return user
       }
     })
 }
+
+
 
 

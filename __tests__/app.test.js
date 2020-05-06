@@ -113,6 +113,14 @@ describe('/api', () => {
 
             })
         })
+        test('status 404: non-existent article_id', () => {
+          return request(app)
+            .get('/api/articles/76666666')
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe('article_id not found');
+            })
+        })
       })
     })
 
