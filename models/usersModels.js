@@ -10,5 +10,23 @@ exports.selectUsername = (username) => {
     .then((user) => {
       if (user.length === 0)
         return Promise.reject({ status: 404, msg: 'username not found' })
+      else {
+        return knex.select('*').from('users').where('username', username)
+      }
     })
 }
+
+
+// exports.getUserInfo = params => {
+//   return connection.select('*').from('users').where('username', '=', params.username).returning('*')
+//     .then(queryRes => {
+//       if (!queryRes || !queryRes.length) {
+//         return Promise.reject({
+//           status: 404,
+//           msg: 'Page not found!'
+//         })
+//       } else {
+//         return queryRes;
+//       }
+//     });
+// };

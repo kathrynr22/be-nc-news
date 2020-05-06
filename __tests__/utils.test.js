@@ -1,5 +1,3 @@
-//const connection = require('../connection');
-
 const {
   formatDates,
   makeRefObj,
