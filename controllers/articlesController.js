@@ -90,15 +90,20 @@ exports.getCommentsByArticleId = (req, res, next) => {
 //.catch(next)
 
 exports.getArticles = (req, res, next) => {
-  console.log('inside the getArticle controller')
+  console.log('inside the getArticle controller yi')
 
-  const { sort_by } = req.query;
-  const { order } = req.query;
+  //const { sort_by } = req.query;
+  //const { order } = req.query;
+  //const { author } = req.query;
+  const { sort_by, order, author } = req.query
+  //put these into one object see friday pic 15.26
 
-  selectArticles(sort_by, order)
+
+  selectArticles(sort_by, order, author)
     .then((articles) => {
       console.log('inside getarticles controller then block hi')
       console.log(articles)
+
       //console.log(article[0])
       //const articleObj = article[0]
       res.status(200)

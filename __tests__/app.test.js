@@ -221,6 +221,18 @@ describe('/api', () => {
             expect(articles).toBeSortedBy('created_at', { ascending: true });
           });
       });
+      test.only('status 200: accepts a query that filters the articles by author', () => {
+        return request(app)
+          .get("/api/articles?author=butter_bridge")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('inside the filter by author test')
+            console.log(articles[0].author)
+            expect(articles[0].author).toEqual('butter_bridge');
+          });
+      });
+
+
 
       // test.only('status 400: trying to order articles by an invalid method', () => {
       //   return request(app)

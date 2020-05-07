@@ -97,9 +97,10 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 // // add || 0 after inc_votes?
 //.orderBy(sort_by || "created_at", order || "asc");
 
-exports.selectArticles = (sort_by, order) => {
+exports.selectArticles = (sort_by, order, author) => {
 
   console.log('inside the selectArticle model')
+  //console.log(req.query)
 
 
   return knex
@@ -109,6 +110,13 @@ exports.selectArticles = (sort_by, order) => {
     .count('comments.article_id AS comment_count')
     .groupBy('articles.article_id')
     .orderBy(sort_by || 'created_at', order || 'desc')
+    .modify((query) => {
+      if (author) query.where('articles.author', author)
+      //if (author) query.where({ 'articles.author': author })
+    })
+
+
+
   // .then((articles) => {
   //   if (articles.sort_by != undefined && sort_by != "desc" || sort_by != undefined && sort_by != "asc")
   //     return Promise.reject({ status: 400, msg: 'bad request' })
