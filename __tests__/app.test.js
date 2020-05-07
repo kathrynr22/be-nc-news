@@ -569,17 +569,16 @@ describe("/api", () => {
               expect(body.comment[0].votes).toEqual(17);
             });
         });
-        // test('responds with the updated article decremented', () => {
-        //   return request(app)
-        //     .patch('/api/articles/1')
-        //     .send({ inc_votes: -1 })
-        //     .expect(200)
-        //     .then(({ body }) => {
-        //       console.log('inside the patch test')
-        //       console.log(body.article[0].votes)
-        //       expect(body.article[0].votes).toEqual(99);
-        //     });
-        // });
+        test("responds with the updated comment decremented", () => {
+          return request(app)
+            .patch("/api/comments/1")
+            .send({ inc_votes: -1 })
+            .expect(200)
+            .then(({ body }) => {
+              //console.log(body.comment[0].votes);
+              expect(body.comment[0].votes).toEqual(15);
+            });
+        });
         // test('status 404: trying to patch a non-existent article_id', () => {
         //   return request(app)
         //     .patch('/api/articles/76666666')
