@@ -1,7 +1,7 @@
 const {
   selectArticleById,
   updateArticleById,
-  sendPostedComment,
+  insertComment,
   selectCommentsByArticleId,
   selectArticles,
 } = require("../models/articlesModels");
@@ -37,8 +37,12 @@ exports.postCommentById = (req, res, next) => {
   const { body } = req.body;
   const { article_id } = req.params;
 
-  sendPostedComment(article_id, body, username)
+  insertComment(article_id, body, username)
     .then((comment) => {
+      console.log("inside insertComment");
+      console.log(comment);
+      console.log(comment.comment);
+      //console.log(commentObj);
       const commentObj = comment[0];
       res.status(201).send({ commentObj });
     })

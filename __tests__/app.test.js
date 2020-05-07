@@ -373,7 +373,7 @@ describe("/api", () => {
       });
     });
     describe("/:article_id/comments", () => {
-      describe("POST", () => {
+      describe.only("POST", () => {
         test("status: 201 responds with the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")

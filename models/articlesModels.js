@@ -31,7 +31,7 @@ exports.updateArticleById = (article_id, inc_votes) => {
     });
 };
 
-exports.sendPostedComment = (article_id, body, username) => {
+exports.insertComment = (article_id, body, username) => {
   let date = new Date();
 
   return knex("comments")
