@@ -65,32 +65,31 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
     });
 };
 
+//come back and refactor to pass test for ordering via an invalid method
 exports.selectArticles = (sort_by, order, author, topic) => {
-  if (order === "desc" || order === "asc") {
-    return knex
-      .select(
-        "articles.author",
-        "title",
-        "articles.article_id",
-        "topic",
-        "articles.created_at",
-        "articles.votes"
-      )
-      .from("articles")
-      .leftJoin("comments", "articles.article_id", "comments.article_id")
-      .count("comments.article_id AS comment_count")
-      .groupBy("articles.article_id")
-      .orderBy(sort_by || "created_at", order || "desc")
-      .modify((query) => {
-        if (author) query.where("articles.author", author);
-        if (topic) query.where("articles.topic", topic);
-      })
-      .then((articles) => {
-        return articles.length === 0
-          ? Promise.reject({ status: 404, msg: "resource not found" })
-          : articles;
-      });
-  } else {
-    return Promise.reject({ status: 400, msg: "bad request" });
-  }
+  return knex
+    .select(
+      "articles.author",
+      "title",
+      "articles.article_id",
+      "topic",
+      "articles.created_at",
+      "articles.votes"
+    )
+    .from("articles")
+    .leftJoin("comments", "articles.article_id", "comments.article_id")
+    .count("comments.article_id AS comment_count")
+    .groupBy("articles.article_id")
+    .orderBy(sort_by || "created_at", order || "desc")
+    .modify((query) => {
+      if (author) query.where("articles.author", author);
+      if (topic) query.where("articles.topic", topic);
+    })
+    .then((articles) => {
+      if (articles.length === 0)
+        return Promise.reject({ status: 404, msg: "resource not found" });
+      else {
+        return articles;
+      }
+    });
 };
