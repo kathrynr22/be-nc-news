@@ -95,11 +95,11 @@ exports.getArticles = (req, res, next) => {
   //const { sort_by } = req.query;
   //const { order } = req.query;
   //const { author } = req.query;
-  const { sort_by, order, author } = req.query
+  const { sort_by, order, author, topic } = req.query
   //put these into one object see friday pic 15.26
 
 
-  selectArticles(sort_by, order, author)
+  selectArticles(sort_by, order, author, topic)
     .then((articles) => {
       console.log('inside getarticles controller then block hi')
       console.log(articles)

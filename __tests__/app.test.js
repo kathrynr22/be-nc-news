@@ -223,7 +223,7 @@ describe('/api', () => {
       });
       test.only('status 200: accepts a query that filters the articles by author', () => {
         return request(app)
-          .get("/api/articles?author=butter_bridge")
+          .get('/api/articles?author=butter_bridge')
           .expect(200)
           .then(({ body: { articles } }) => {
             console.log('inside the filter by author test')
@@ -232,7 +232,16 @@ describe('/api', () => {
           });
       });
 
-
+      test.only('status 200: accepts a query that filters the articles by topic', () => {
+        return request(app)
+          .get('/api/articles?topic=cats')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('inside the filter by topics test')
+            console.log(articles[0].topic)
+            expect(articles[0].topic).toEqual('cats');
+          });
+      });
 
       // test.only('status 400: trying to order articles by an invalid method', () => {
       //   return request(app)
