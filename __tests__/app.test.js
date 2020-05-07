@@ -587,24 +587,24 @@ describe("/api", () => {
               expect(msg).toBe("comment_id not found");
             });
         });
-        // test('status 400: trying to patch to an invalid article_id', () => {
-        //   return request(app)
-        //     .patch('/api/articles/notAnInt')
-        //     .send({ inc_votes: 1 })
-        //     .expect(400)
-        //     .then(({ body: { msg } }) => {
-        //       expect(msg).toBe('bad request');
-        //     })
-        // })
-        // test('status 400: trying to patch something invalid ie not incrementing or decrementing a vote', () => {
-        //   return request(app)
-        //     .patch('/api/articles/1')
-        //     .send({ inc_votes: 'notAnInt' })
-        //     .expect(400)
-        //     .then(({ body: { msg } }) => {
-        //       expect(msg).toBe('bad request');
-        //     })
-        // })
+        test("status 400: trying to patch to an invalid article_id", () => {
+          return request(app)
+            .patch("/api/comments/notAnInt")
+            .send({ inc_votes: 1 })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
+        test("status 400: trying to patch something invalid ie not incrementing or decrementing a vote", () => {
+          return request(app)
+            .patch("/api/comments/1")
+            .send({ inc_votes: "notAnInt" })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
       });
     });
   });
