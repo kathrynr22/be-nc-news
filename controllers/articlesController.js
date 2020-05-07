@@ -51,8 +51,7 @@ exports.getCommentsByArticleId = (req, res, next) => {
   console.log("inside the get comments controller");
 
   const { article_id } = req.params;
-  const { sort_by } = req.query;
-  const { order } = req.query;
+  const { sort_by, order } = req.query;
 
   selectCommentsByArticleId(article_id, sort_by, order)
     .then((comment) => {

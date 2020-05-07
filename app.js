@@ -4,7 +4,6 @@ const {
   handleInternalErrors,
   handleCustomErrors,
   handlePSQLErrors,
-  handle405s,
   send404,
 } = require("./controllers/errorControllers");
 const app = express();
@@ -22,7 +21,6 @@ app.use(send404);
 
 app.use(handlePSQLErrors);
 app.use(handleCustomErrors);
-app.use(handle405s);
 app.use(handleInternalErrors);
 
 // app.listen(9090, (err) => {
