@@ -242,17 +242,25 @@ describe('/api', () => {
             expect(articles[0].topic).toEqual('cats');
           });
       });
-      test.only('status 400: trying to filter articles based on a non-existent author', () => {
+      test.only('status 404: trying to filter articles based on a non-existent author', () => {
         return request(app)
           .get('/api/articles?author=kathryn')
           .expect(404)
           .then(({ body: { msg } }) => {
-            expect(msg).toBe('author not found');
+            expect(msg).toBe('resource not found');
           });
       });
-      // test('status 400: trying to sort comments for an invalid column', () => {
+      test.only('status 404: trying to filter articles based on a non-existent topic', () => {
+        return request(app)
+          .get('/api/articles?topic=kathryn')
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('resource not found');
+          });
+      });
+      // test.only('status 400: trying to filter articles for an invalid author', () => {
       //   return request(app)
-      //     .get('/api/articles?sort_by=3232545')
+      //     .get('/api/articles?author=29395')
       //     .expect(400)
       //     .then(({ body: { msg } }) => {
       //       expect(msg).toBe('bad request');

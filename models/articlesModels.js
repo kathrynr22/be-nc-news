@@ -116,16 +116,17 @@ exports.selectArticles = (sort_by, order, author, topic) => {
       //if (author) query.where({ 'articles.author': author })
       //})
 
-    }).then((articles) => {
+    })
+    .then((articles) => {
 
-      // if (articles.length === 0)
-      if (articles.author === undefined)
-        return Promise.reject({ status: 404, msg: 'author not found' })
+      if (articles.length === 0)
+        return Promise.reject({ status: 404, msg: 'resource not found' })
+
       else {
         return articles
       }
     })
-  // })
+
 }
 
     // .then((articles) => {
