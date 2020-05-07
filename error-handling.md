@@ -5,7 +5,7 @@ This is an incomplete guide to the possible errors that may happen in your app. 
 Think about what could go wrong for each route, and the HTTP status code should be sent to the client in each case.
 For each thing that could go wrong, make a test with your expected status code and then make sure that possibility is handled.
 
-Bear in mind, handling bad inputs from clients doesn't necessarily have to lead to a 4** status code. Handling can include using default behaviours or even ignoring parts of the request.
+Bear in mind, handling bad inputs from clients doesn't necessarily have to lead to a 4\*\* status code. Handling can include using default behaviours or even ignoring parts of the request.
 
 ---
 
@@ -13,12 +13,12 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - 200 OK
 - 201 Created
-- 204 No Content
+- 204 No Content // NOT DONE THIS ONE YET
 - 400 Bad Request
 - 404 Not Found
 - 405 Method Not Allowed
-- 418 I'm a teapot
-- 422 Unprocessable Entity
+- 418 I'm a teapot //NOT DONE THIS ONE YET
+- 422 Unprocessable Entity // NOT DONE THIS ONE YET
 - 500 Internal Server Error
 
 ---
@@ -58,7 +58,7 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - No `inc_votes` on request body
 - Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
-- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`)
+- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`) NOT DONE THIS ONE YET
 
 ### POST `/api/articles/:article_id/comments`
 
@@ -74,7 +74,7 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
   - `sort_by` a column that doesn't exist
   - `order` !== "asc" / "desc"
   - `author` / `topic` that is not in the database
-  - `author` / `topic` that exists but does not have any articles associated with it
+  - `author` / `topic` that exists but does not have any articles associated with it NOT DONE THIS ONE YET
 
 ### PATCH `/api/comments/:comment_id`
 
