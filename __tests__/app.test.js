@@ -84,13 +84,13 @@ describe('/api', () => {
 
   })
   describe('/articles', () => {
-    describe.only('GET', () => {
+    describe('GET', () => {
       test('status: 200 responds with an articles array of article objects', () => {
         return request(app)
           .get('/api/articles/')
           .expect(200)
           .then(({ body }) => {
-            console.log('inside the get comments test')
+            console.log('inside the get articles test')
             console.log(body.articles)
             expect(Array.isArray(body.articles)).toBe(true)
           })
@@ -101,7 +101,7 @@ describe('/api', () => {
           .expect(200)
           .then(({ body }) => {
             console.log('inside the test articles property')
-            console.log(body)
+            //console.log(body)
             body.articles.forEach((article) => {
               expect(article).toHaveProperty('author')
               expect(article).toHaveProperty('created_at')
@@ -129,21 +129,62 @@ describe('/api', () => {
         return request(app)
           .get('/api/articles/')
           .expect(200)
-          .then(({ body: { articles } }) => {
-            console.log('inside the articles sort by created_at test')
-            console.log(articles)
-            expect(articles).toBeSortedBy('created_at', { ascending: true });
+          .then(({ body }) => {
+            //console.log('inside the articles sort by created_at test')
+            //console.log(body.articles)
+            expect(body.articles).toBeSortedBy('created_at', { ascending: true });
           });
       });
-      // test('status 200: sorts the comments by any valid column passed in as a query - test for votes query', () => {
-      //   return request(app)
-      //     .get('/api/articles/1/comments?sort_by=votes')
-      //     .expect(200)
-      //     .then(({ body: { comment } }) => {
-      //       expect(comment).toBeSortedBy('votes', { ascending: true });
-      //     });
-      // });
-
+      test('status 200: sorts the articles by any valid column passed in as a query - test for author query', () => {
+        return request(app)
+          .get('/api/articles?sort_by=author')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('helllooo')
+            console.log(articles)
+            expect(articles).toBeSortedBy('author', { ascending: true });
+          });
+      });
+      test('status 200: sorts the articles by any valid column passed in as a query - test for article_id query', () => {
+        return request(app)
+          .get('/api/articles?sort_by=article_id')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('yo')
+            console.log(articles)
+            expect(articles).toBeSortedBy('article_id', { ascending: true, coerce: true });
+          });
+      });
+      test('status 200: sorts the articles by any valid column passed in as a query - test for votes query', () => {
+        return request(app)
+          .get('/api/articles?sort_by=votes')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('votes')
+            console.log(articles)
+            expect(articles).toBeSortedBy('votes', { ascending: true });
+          });
+      });
+      test('status 200: sorts the articles by any valid column passed in as a query - test for topic query', () => {
+        return request(app)
+          .get('/api/articles?sort_by=topic')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('topic')
+            console.log(articles)
+            expect(articles).toBeSortedBy('topic', { ascending: true });
+          });
+      })
+      test.only('status 200: sorts the articles by any valid column passed in as a query - test for comment_count query', () => {
+        return request(app)
+          .get('/api/articles?sort_by=comment_count')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('comment')
+            console.log(articles)
+            expect(articles).toBeSortedBy('comment_count', { ascending: true, coerce: true });
+          });
+      });
     })
     describe('/:article_id', () => {
       describe('GET', () => {
@@ -417,6 +458,3 @@ describe('/api', () => {
 
   })
 })
-
-
-
