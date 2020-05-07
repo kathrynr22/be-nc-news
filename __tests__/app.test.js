@@ -610,12 +610,20 @@ describe("/api", () => {
         test("status 204 deletes comment from comments table by comment_id", () => {
           return request(app).del("/api/comments/1").expect(204);
         });
-        test("status 404 trying to delete comment from non-existent comments table", () => {
+        test("status 404 trying to delete comment of a non-existent comment_id", () => {
           return request(app)
             .del("/api/comments/15454")
             .expect(404)
             .then(({ body: { msg } }) => {
               expect(msg).toBe("comment_id not found");
+            });
+        });
+        test("status 400 trying to delete comment of an invalid comments_id", () => {
+          return request(app)
+            .del("/api/comments/notAnInt")
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
             });
         });
       });
