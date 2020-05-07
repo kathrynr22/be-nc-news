@@ -7,7 +7,7 @@ beforeEach(() => connection.seed.run());
 afterAll(() => connection.destroy());
 
 describe("/api", () => {
-  describe("status 404", () => {
+  describe("missing route", () => {
     test("status 404: missing route", () => {
       return request(app)
         .get("/api/nowhere")
@@ -99,8 +99,6 @@ describe("/api", () => {
           .get("/api/articles/")
           .expect(200)
           .then(({ body }) => {
-            console.log("inside the get articles test");
-            console.log(body.articles);
             expect(Array.isArray(body.articles)).toBe(true);
           });
       });
@@ -109,8 +107,6 @@ describe("/api", () => {
           .get("/api/articles/")
           .expect(200)
           .then(({ body }) => {
-            console.log("inside the test articles property");
-            //console.log(body)
             body.articles.forEach((article) => {
               expect(article).toHaveProperty("author");
               expect(article).toHaveProperty("created_at");
@@ -138,8 +134,6 @@ describe("/api", () => {
           .get("/api/articles/")
           .expect(200)
           .then(({ body }) => {
-            //console.log('inside the articles sort by created_at test')
-            //console.log(body.articles)
             expect(body.articles).toBeSortedBy("created_at", {
               descending: true,
             });
@@ -150,8 +144,6 @@ describe("/api", () => {
           .get("/api/articles?sort_by=author")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("helllooo");
-            console.log(articles);
             expect(articles).toBeSortedBy("author", { descending: true });
           });
       });
@@ -160,8 +152,6 @@ describe("/api", () => {
           .get("/api/articles?sort_by=article_id")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("yo");
-            console.log(articles);
             expect(articles).toBeSortedBy("article_id", {
               descending: true,
               coerce: true,
@@ -173,8 +163,6 @@ describe("/api", () => {
           .get("/api/articles?sort_by=votes")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("votes");
-            console.log(articles);
             expect(articles).toBeSortedBy("votes", { descending: true });
           });
       });
@@ -183,8 +171,6 @@ describe("/api", () => {
           .get("/api/articles?sort_by=topic")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("topic");
-            console.log(articles);
             expect(articles).toBeSortedBy("topic", { descending: true });
           });
       });
@@ -193,8 +179,6 @@ describe("/api", () => {
           .get("/api/articles?sort_by=comment_count")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("comment");
-            console.log(articles);
             expect(articles).toBeSortedBy("comment_count", {
               descending: true,
               coerce: true,
@@ -222,8 +206,6 @@ describe("/api", () => {
           .get("/api/articles/?order=desc")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("inside the sort by desc test");
-            console.log(articles);
             expect(articles).toBeSortedBy("created_at", { descending: true });
           });
       });
@@ -232,8 +214,6 @@ describe("/api", () => {
           .get("/api/articles/?order=asc")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("inside the sort by asc test");
-            console.log(articles);
             expect(articles).toBeSortedBy("created_at", { ascending: true });
           });
       });
@@ -242,8 +222,6 @@ describe("/api", () => {
           .get("/api/articles?author=butter_bridge")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("inside the filter by author test");
-            console.log(articles[0].author);
             expect(articles[0].author).toEqual("butter_bridge");
           });
       });
@@ -253,8 +231,6 @@ describe("/api", () => {
           .get("/api/articles?topic=cats")
           .expect(200)
           .then(({ body: { articles } }) => {
-            console.log("inside the filter by topics test");
-            console.log(articles[0].topic);
             expect(articles[0].topic).toEqual("cats");
           });
       });
@@ -290,6 +266,14 @@ describe("/api", () => {
       //       expect(msg).toBe('bad request');
       //     });
       // });
+      test("invalid method", () => {
+        return request(app)
+          .delete("/api/articles")
+          .expect(405)
+          .then((res) => {
+            expect(res.body.msg).toBe("method not allowed");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {
@@ -311,7 +295,6 @@ describe("/api", () => {
             .get("/api/articles/1")
             .expect(200)
             .then(({ body: { articleObj } }) => {
-              console.log("inside the second test");
               expect(articleObj.article_id).toEqual(1);
             });
         });
@@ -340,8 +323,6 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body }) => {
-              console.log("inside the patch test");
-              console.log(body.article[0].votes);
               expect(body.article[0].votes).toEqual(101);
             });
         });
@@ -351,8 +332,6 @@ describe("/api", () => {
             .send({ inc_votes: -1 })
             .expect(200)
             .then(({ body }) => {
-              console.log("inside the patch test");
-              console.log(body.article[0].votes);
               expect(body.article[0].votes).toEqual(99);
             });
         });
@@ -497,7 +476,6 @@ describe("/api", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body: { comment } }) => {
-              console.log("inside the sort by created_at test");
               expect(comment).toBeSortedBy("created_at", { ascending: true });
             });
         });
@@ -549,8 +527,6 @@ describe("/api", () => {
             .get("/api/articles/1/comments?order=desc")
             .expect(200)
             .then(({ body: { comment } }) => {
-              console.log("inside the sort by asc test");
-              console.log("comment");
               expect(comment).toBeSortedBy("created_at", { descending: true });
             });
         });
