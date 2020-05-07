@@ -557,20 +557,18 @@ describe("/api", () => {
       });
     });
   });
-  describe("/comments", () => {
+  describe.only("/comments", () => {
     describe("/:comment_id", () => {
       describe("PATCH", () => {
-        // test('responds with the updated comment incremented', () => {
-        //   return request(app)
-        //     .patch('/api/comments/')
-        //     .send({ inc_votes: 1 })
-        //     .expect(200)
-        //     .then(({ body }) => {
-        //       console.log('inside the patch test')
-        //       console.log(body.article[0].votes)
-        //       expect(body.article[0].votes).toEqual(101);
-        //     });
-        // });
+        test("responds with the updated comment incremented", () => {
+          return request(app)
+            .patch("/api/comments/1")
+            .send({ inc_votes: 1 })
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comment[0].votes).toEqual(17);
+            });
+        });
         // test('responds with the updated article decremented', () => {
         //   return request(app)
         //     .patch('/api/articles/1')
