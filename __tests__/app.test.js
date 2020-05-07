@@ -557,7 +557,7 @@ describe("/api", () => {
       });
     });
   });
-  describe.only("/comments", () => {
+  describe("/comments", () => {
     describe("/:comment_id", () => {
       describe("PATCH", () => {
         test("responds with the updated comment incremented", () => {

@@ -12,6 +12,12 @@ const app = express();
 app.use(express.json());
 app.use("/api", apiRouter);
 
+app.use((err, req, res, next) => {
+  const { method, url } = req;
+  console.log(`error occured on ${method} ${url}:`, err);
+  next(err);
+});
+
 app.use(send404);
 
 app.use(handlePSQLErrors);
@@ -25,4 +31,3 @@ app.use(handleInternalErrors);
 // });
 
 module.exports = app;
-//why is this not green
