@@ -242,7 +242,7 @@ describe('/api', () => {
             expect(articles[0].topic).toEqual('cats');
           });
       });
-      test.only('status 404: trying to filter articles based on a non-existent author', () => {
+      test('status 404: trying to filter articles based on a non-existent author', () => {
         return request(app)
           .get('/api/articles?author=kathryn')
           .expect(404)
@@ -250,7 +250,7 @@ describe('/api', () => {
             expect(msg).toBe('resource not found');
           });
       });
-      test.only('status 404: trying to filter articles based on a non-existent topic', () => {
+      test('status 404: trying to filter articles based on a non-existent topic', () => {
         return request(app)
           .get('/api/articles?topic=kathryn')
           .expect(404)
@@ -545,5 +545,61 @@ describe('/api', () => {
     })
 
 
+  })
+  describe('/comments', () => {
+    describe('/:comment_id', () => {
+      describe('PATCH', () => {
+        // test('responds with the updated comment incremented', () => {
+        //   return request(app)
+        //     .patch('/api/comments/')
+        //     .send({ inc_votes: 1 })
+        //     .expect(200)
+        //     .then(({ body }) => {
+        //       console.log('inside the patch test')
+        //       console.log(body.article[0].votes)
+        //       expect(body.article[0].votes).toEqual(101);
+        //     });
+        // });
+        // test('responds with the updated article decremented', () => {
+        //   return request(app)
+        //     .patch('/api/articles/1')
+        //     .send({ inc_votes: -1 })
+        //     .expect(200)
+        //     .then(({ body }) => {
+        //       console.log('inside the patch test')
+        //       console.log(body.article[0].votes)
+        //       expect(body.article[0].votes).toEqual(99);
+        //     });
+        // });
+        // test('status 404: trying to patch a non-existent article_id', () => {
+        //   return request(app)
+        //     .patch('/api/articles/76666666')
+        //     .send({ inc_votes: 1 })
+        //     .expect(404)
+        //     .then(({ body: { msg } }) => {
+        //       expect(msg).toBe('article_id not found');
+        //     })
+        // })
+        // test('status 400: trying to patch to an invalid article_id', () => {
+        //   return request(app)
+        //     .patch('/api/articles/notAnInt')
+        //     .send({ inc_votes: 1 })
+        //     .expect(400)
+        //     .then(({ body: { msg } }) => {
+        //       expect(msg).toBe('bad request');
+        //     })
+        // })
+        // test('status 400: trying to patch something invalid ie not incrementing or decrementing a vote', () => {
+        //   return request(app)
+        //     .patch('/api/articles/1')
+        //     .send({ inc_votes: 'notAnInt' })
+        //     .expect(400)
+        //     .then(({ body: { msg } }) => {
+        //       expect(msg).toBe('bad request');
+        //     })
+        // })
+
+      })
+    })
   })
 })

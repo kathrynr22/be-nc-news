@@ -27,7 +27,8 @@ exports.seed = function (knex) {
       //console.log(articleRef)
       //console.log(commentData)
       const formattedComments = formatComments(commentData, articleRef);
-      //console.log(formattedComments)
+      console.log('inside the seed')
+      console.log(formattedComments)
       return knex('comments').insert(formattedComments).returning('*');
 
     });

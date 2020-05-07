@@ -1,0 +1,21 @@
+.get('/api/articles/1')
+            .expect(200)
+            .then((res) => {
+              expect(res.body.article).contains.keys('author', 'title', 'article_id', 'topic', 'created_at', 'votes', 'comment_count');
+              expect(res.body.article.article_id).to.equal(1);
+            });
+DIDNT WORK ISSUE WITH DATE
+            .then(({ body: { articleObj } }) => {
+              console.log('inside the test')
+              //console.log(body.articleObj)
+              //articleObj.forEach((article) => {
+              expect(articleObj).toEqual({
+                article_id: 1,
+                title: 'Living in the shadow of a great man',
+                body: 'I find this existence challenging',
+                votes: 100,
+                topic: 'mitch',
+                author: 'butter_bridge',
+                created_at: new Date(1542284514171),
+                comment_count: '13'
+              })
