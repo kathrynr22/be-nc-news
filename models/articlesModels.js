@@ -101,6 +101,7 @@ exports.selectArticles = (sort_by, order) => {
 
   console.log('inside the selectArticle model')
 
+
   return knex
     .select('articles.author', 'title', 'articles.article_id', 'topic', 'articles.created_at', 'articles.votes')
     .from('articles')
@@ -108,12 +109,12 @@ exports.selectArticles = (sort_by, order) => {
     .count('comments.article_id AS comment_count')
     .groupBy('articles.article_id')
     .orderBy(sort_by || 'created_at', order || 'desc')
-    .then((article) => {
-      if (article.length === 0)
-        return Promise.reject({ status: 404, msg: 'article_id not found' })
-      else {
-        return article
-      }
-    })
+  // .then((articles) => {
+  //   if (articles.sort_by != undefined && sort_by != "desc" || sort_by != undefined && sort_by != "asc")
+  //     return Promise.reject({ status: 400, msg: 'bad request' })
+  //   else {
+  //     return articles
+  //   }
+  // })
 
 }

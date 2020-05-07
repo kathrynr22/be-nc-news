@@ -221,17 +221,10 @@ describe('/api', () => {
             expect(articles).toBeSortedBy('created_at', { ascending: true });
           });
       });
-      // test('status 404: trying to order comments for a non-existent article_id', () => {
+
+      // test.only('status 400: trying to order articles by an invalid method', () => {
       //   return request(app)
-      //     .get('/api/articles/76666666/comments?order=desc')
-      //     .expect(404)
-      //     .then(({ body: { msg } }) => {
-      //       expect(msg).toBe('article_id not found');
-      //     });
-      // });
-      // test('status 400: trying to order comments for an invalid article_id', () => {
-      //   return request(app)
-      //     .get('/api/articles/notAnInt/comments?order=desc')
+      //     .get('/api/articles/?order=disc')
       //     .expect(400)
       //     .then(({ body: { msg } }) => {
       //       expect(msg).toBe('bad request');
