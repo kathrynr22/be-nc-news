@@ -125,14 +125,14 @@ describe('/api', () => {
         return Promise.all(requests)
 
       })
-      test('status 200: by default, sorts the articles by the created_at column', () => {
+      test('status 200: by default, sorts the articles by the created_at column and in descending order', () => {
         return request(app)
           .get('/api/articles/')
           .expect(200)
           .then(({ body }) => {
             //console.log('inside the articles sort by created_at test')
             //console.log(body.articles)
-            expect(body.articles).toBeSortedBy('created_at', { ascending: true });
+            expect(body.articles).toBeSortedBy('created_at', { descending: true });
           });
       });
       test('status 200: sorts the articles by any valid column passed in as a query - test for author query', () => {
@@ -142,7 +142,7 @@ describe('/api', () => {
           .then(({ body: { articles } }) => {
             console.log('helllooo')
             console.log(articles)
-            expect(articles).toBeSortedBy('author', { ascending: true });
+            expect(articles).toBeSortedBy('author', { descending: true });
           });
       });
       test('status 200: sorts the articles by any valid column passed in as a query - test for article_id query', () => {
@@ -152,7 +152,7 @@ describe('/api', () => {
           .then(({ body: { articles } }) => {
             console.log('yo')
             console.log(articles)
-            expect(articles).toBeSortedBy('article_id', { ascending: true, coerce: true });
+            expect(articles).toBeSortedBy('article_id', { descending: true, coerce: true });
           });
       });
       test('status 200: sorts the articles by any valid column passed in as a query - test for votes query', () => {
@@ -162,7 +162,7 @@ describe('/api', () => {
           .then(({ body: { articles } }) => {
             console.log('votes')
             console.log(articles)
-            expect(articles).toBeSortedBy('votes', { ascending: true });
+            expect(articles).toBeSortedBy('votes', { descending: true });
           });
       });
       test('status 200: sorts the articles by any valid column passed in as a query - test for topic query', () => {
@@ -172,7 +172,7 @@ describe('/api', () => {
           .then(({ body: { articles } }) => {
             console.log('topic')
             console.log(articles)
-            expect(articles).toBeSortedBy('topic', { ascending: true });
+            expect(articles).toBeSortedBy('topic', { descending: true });
           });
       })
       test('status 200: sorts the articles by any valid column passed in as a query - test for comment_count query', () => {
@@ -182,7 +182,7 @@ describe('/api', () => {
           .then(({ body: { articles } }) => {
             console.log('comment')
             console.log(articles)
-            expect(articles).toBeSortedBy('comment_count', { ascending: true, coerce: true });
+            expect(articles).toBeSortedBy('comment_count', { descending: true, coerce: true });
           });
       });
       test('status 400: trying to sort articles based on a non-existent column', () => {
