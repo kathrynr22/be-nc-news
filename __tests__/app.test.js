@@ -606,6 +606,11 @@ describe("/api", () => {
             });
         });
       });
+      describe("DELETE", () => {
+        test("status 204 removes comment from comments table by comment_id", () => {
+          return request(app).del("/api/comments/1").expect(204);
+        });
+      });
     });
   });
 });
