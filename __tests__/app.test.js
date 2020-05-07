@@ -575,19 +575,18 @@ describe("/api", () => {
             .send({ inc_votes: -1 })
             .expect(200)
             .then(({ body }) => {
-              //console.log(body.comment[0].votes);
               expect(body.comment[0].votes).toEqual(15);
             });
         });
-        // test('status 404: trying to patch a non-existent article_id', () => {
-        //   return request(app)
-        //     .patch('/api/articles/76666666')
-        //     .send({ inc_votes: 1 })
-        //     .expect(404)
-        //     .then(({ body: { msg } }) => {
-        //       expect(msg).toBe('article_id not found');
-        //     })
-        // })
+        test("status 404: trying to patch a non-existent comment_id", () => {
+          return request(app)
+            .patch("/api/comments/76666666")
+            .send({ inc_votes: 1 })
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("comment_id not found");
+            });
+        });
         // test('status 400: trying to patch to an invalid article_id', () => {
         //   return request(app)
         //     .patch('/api/articles/notAnInt')
