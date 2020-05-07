@@ -185,7 +185,7 @@ describe('/api', () => {
             expect(articles).toBeSortedBy('comment_count', { ascending: true, coerce: true });
           });
       });
-      test('status 404: trying to sort articles based on a non-existent column', () => {
+      test('status 400: trying to sort articles based on a non-existent column', () => {
         return request(app)
           .get('/api/articles?sort_by=not_a_column')
           .expect(400)
@@ -201,6 +201,42 @@ describe('/api', () => {
             expect(msg).toBe('bad request');
           });
       });
+      test('status 200: accepts an order by query that sorts the articles by descending order', () => {
+        return request(app)
+          .get('/api/articles/?order=desc')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('inside the sort by desc test')
+            console.log(articles)
+            expect(articles).toBeSortedBy('created_at', { descending: true });
+          });
+      });
+      test('status 200: accepts an order by query that sorts the articles by ascending order', () => {
+        return request(app)
+          .get('/api/articles/?order=asc')
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            console.log('inside the sort by asc test')
+            console.log(articles)
+            expect(articles).toBeSortedBy('created_at', { ascending: true });
+          });
+      });
+      // test('status 404: trying to order comments for a non-existent article_id', () => {
+      //   return request(app)
+      //     .get('/api/articles/76666666/comments?order=desc')
+      //     .expect(404)
+      //     .then(({ body: { msg } }) => {
+      //       expect(msg).toBe('article_id not found');
+      //     });
+      // });
+      // test('status 400: trying to order comments for an invalid article_id', () => {
+      //   return request(app)
+      //     .get('/api/articles/notAnInt/comments?order=desc')
+      //     .expect(400)
+      //     .then(({ body: { msg } }) => {
+      //       expect(msg).toBe('bad request');
+      //     });
+      // });
     })
     describe('/:article_id', () => {
       describe('GET', () => {

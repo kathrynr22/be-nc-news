@@ -93,8 +93,9 @@ exports.getArticles = (req, res, next) => {
   console.log('inside the getArticle controller')
 
   const { sort_by } = req.query;
+  const { order } = req.query;
 
-  selectArticles(sort_by)
+  selectArticles(sort_by, order)
     .then((articles) => {
       console.log('inside getarticles controller then block hi')
       console.log(articles)

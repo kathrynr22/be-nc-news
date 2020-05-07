@@ -97,7 +97,7 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 // // add || 0 after inc_votes?
 //.orderBy(sort_by || "created_at", order || "asc");
 
-exports.selectArticles = (sort_by) => {
+exports.selectArticles = (sort_by, order) => {
 
   console.log('inside the selectArticle model')
 
@@ -107,7 +107,7 @@ exports.selectArticles = (sort_by) => {
     .leftJoin('comments', 'articles.article_id', 'comments.article_id')
     .count('comments.article_id AS comment_count')
     .groupBy('articles.article_id')
-    .orderBy(sort_by || 'created_at')
+    .orderBy(sort_by || 'created_at', order || 'desc')
     .then((article) => {
       if (article.length === 0)
         return Promise.reject({ status: 404, msg: 'article_id not found' })
