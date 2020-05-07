@@ -114,8 +114,29 @@ exports.selectArticles = (sort_by, order, author, topic) => {
       if (author) query.where('articles.author', author)
       if (topic) query.where('articles.topic', topic)
       //if (author) query.where({ 'articles.author': author })
-    })
+      //})
 
+    }).then((articles) => {
+
+      // if (articles.length === 0)
+      if (articles.author === undefined)
+        return Promise.reject({ status: 404, msg: 'author not found' })
+      else {
+        return articles
+      }
+    })
+  // })
+}
+
+    // .then((articles) => {
+    //     if (articles.sort_by != undefined && sort_by != "desc" || sort_by != undefined && sort_by != "asc")
+    //       return Promise.reject({ status: 400, msg: 'bad request' })
+    //     else {
+    //       return articles
+    //     }
+    //   })
+
+    // }
 
 
 
@@ -128,4 +149,4 @@ exports.selectArticles = (sort_by, order, author, topic) => {
   //   }
   // })
 
-}
+//}

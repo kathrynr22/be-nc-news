@@ -221,7 +221,7 @@ describe('/api', () => {
             expect(articles).toBeSortedBy('created_at', { ascending: true });
           });
       });
-      test.only('status 200: accepts a query that filters the articles by author', () => {
+      test('status 200: accepts a query that filters the articles by author', () => {
         return request(app)
           .get('/api/articles?author=butter_bridge')
           .expect(200)
@@ -232,7 +232,7 @@ describe('/api', () => {
           });
       });
 
-      test.only('status 200: accepts a query that filters the articles by topic', () => {
+      test('status 200: accepts a query that filters the articles by topic', () => {
         return request(app)
           .get('/api/articles?topic=cats')
           .expect(200)
@@ -242,7 +242,22 @@ describe('/api', () => {
             expect(articles[0].topic).toEqual('cats');
           });
       });
-
+      test.only('status 400: trying to filter articles based on a non-existent author', () => {
+        return request(app)
+          .get('/api/articles?author=kathryn')
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('author not found');
+          });
+      });
+      // test('status 400: trying to sort comments for an invalid column', () => {
+      //   return request(app)
+      //     .get('/api/articles?sort_by=3232545')
+      //     .expect(400)
+      //     .then(({ body: { msg } }) => {
+      //       expect(msg).toBe('bad request');
+      //     });
+      // });
       // test.only('status 400: trying to order articles by an invalid method', () => {
       //   return request(app)
       //     .get('/api/articles/?order=disc')
