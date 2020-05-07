@@ -23,7 +23,12 @@ exports.deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params;
   console.log("inside the comments controller");
 
-  removeCommentById(comment_id).then(() => {
-    res.sendStatus(204);
-  });
+  removeCommentById(comment_id)
+    .then((delCount) => {
+      console.log(delCount);
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

@@ -607,8 +607,16 @@ describe("/api", () => {
         });
       });
       describe("DELETE", () => {
-        test("status 204 removes comment from comments table by comment_id", () => {
+        test("status 204 deletes comment from comments table by comment_id", () => {
           return request(app).del("/api/comments/1").expect(204);
+        });
+        test("status 404 trying to delete comment from non-existent comments table", () => {
+          return request(app)
+            .del("/api/comments/15454")
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("comment_id not found");
+            });
         });
       });
     });
