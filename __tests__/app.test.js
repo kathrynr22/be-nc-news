@@ -175,7 +175,7 @@ describe('/api', () => {
             expect(articles).toBeSortedBy('topic', { ascending: true });
           });
       })
-      test.only('status 200: sorts the articles by any valid column passed in as a query - test for comment_count query', () => {
+      test('status 200: sorts the articles by any valid column passed in as a query - test for comment_count query', () => {
         return request(app)
           .get('/api/articles?sort_by=comment_count')
           .expect(200)
@@ -183,6 +183,22 @@ describe('/api', () => {
             console.log('comment')
             console.log(articles)
             expect(articles).toBeSortedBy('comment_count', { ascending: true, coerce: true });
+          });
+      });
+      test('status 404: trying to sort articles based on a non-existent column', () => {
+        return request(app)
+          .get('/api/articles?sort_by=not_a_column')
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('bad request');
+          });
+      });
+      test('status 400: trying to sort comments for an invalid column', () => {
+        return request(app)
+          .get('/api/articles?sort_by=3232545')
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe('bad request');
           });
       });
     })
