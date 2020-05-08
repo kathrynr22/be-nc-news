@@ -574,8 +574,9 @@ describe("/api", () => {
             .patch("/api/comments/1")
             .send({ inc_votes: 1 })
             .expect(200)
-            .then(({ body }) => {
-              expect(body.comment.votes).toEqual(17);
+            .then(({ body: { patchedComment } }) => {
+              console.log(patchedComment);
+              expect(patchedComment.votes).toEqual(17);
             });
         });
         test("responds with the updated comment decremented", () => {
@@ -583,8 +584,8 @@ describe("/api", () => {
             .patch("/api/comments/1")
             .send({ inc_votes: -1 })
             .expect(200)
-            .then(({ body }) => {
-              expect(body.comment.votes).toEqual(15);
+            .then(({ body: { patchedComment } }) => {
+              expect(patchedComment.votes).toEqual(15);
             });
         });
         test("status 404: trying to patch a non-existent comment_id", () => {

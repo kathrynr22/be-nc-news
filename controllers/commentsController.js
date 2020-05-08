@@ -8,10 +8,10 @@ exports.patchCommentsById = (req, res, next) => {
   const { comment_id } = req.params;
 
   updateCommentById(comment_id, inc_votes)
-    .then((comment) => {
-      console.log("inside update comment by id then block");
-      console.log(comment);
-      res.send({ comment });
+    .then((patchedComment) => {
+      console.log("inside controller");
+      console.log(patchedComment);
+      res.send({ patchedComment });
     })
     .catch((err) => {
       next(err);

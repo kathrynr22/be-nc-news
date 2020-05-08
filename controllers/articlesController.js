@@ -24,8 +24,6 @@ exports.patchArticlesById = (req, res, next) => {
 
   updateArticleById(article_id, inc_votes)
     .then((patchedArticle) => {
-      console.log("inside patch articles by id then");
-
       res.status(200).send({ patchedArticle });
     })
     .catch((err) => {
