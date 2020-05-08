@@ -10,9 +10,11 @@ exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
 
   selectArticleById(article_id)
-    .then((article) => {
-      const articleObj = article[0];
-      res.status(200).send({ articleObj });
+    .then((article_by_id) => {
+      console.log("inside then block");
+      //console.log(article);
+      //const articleObj = article[0];
+      res.status(200).send({ article_by_id });
     })
     .catch((err) => {
       next(err);
