@@ -23,6 +23,10 @@ exports.updateArticleById = (article_id, inc_votes) => {
     .increment("votes", inc_votes)
     .returning("*")
     .then((article) => {
+      console.log("inside update articleby id model");
+      console.log(article);
+      //const object = article[0];
+      //console.log(object);
       if (article.length === 0)
         return Promise.reject({ status: 404, msg: "article_id not found" });
       else {
@@ -36,14 +40,12 @@ exports.insertComment = (article_id, body, username) => {
 
   return knex("comments")
     .where("article_id", article_id)
-    .insert([
-      {
-        author: username,
-        body: body,
-        article_id: article_id,
-        created_at: date,
-      },
-    ])
+    .insert({
+      author: username,
+      body: body,
+      article_id: article_id,
+      created_at: date,
+    })
     .returning("*");
 };
 
@@ -54,7 +56,7 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
     .select("comment_id", "votes", "created_at", "author", "body")
     .from("comments")
     .where("article_id", article_id)
-    .orderBy(sort_by || "created_at", order || "asc")
+    .orderBy(sort_by || "created_at", order || "desc")
     .then((comment) => {
       console.log(comment);
       if (comment.length === 0)

@@ -373,7 +373,7 @@ describe("/api", () => {
       });
     });
     describe("/:article_id/comments", () => {
-      describe.only("POST", () => {
+      describe("POST", () => {
         test("status: 201 responds with the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")
@@ -484,7 +484,7 @@ describe("/api", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("created_at", { ascending: true });
+              expect(comment).toBeSortedBy("created_at", { descending: true });
             });
         });
         test("status 200: sorts the comments by any valid column passed in as a query - test for votes query", () => {
@@ -492,7 +492,7 @@ describe("/api", () => {
             .get("/api/articles/1/comments?sort_by=votes")
             .expect(200)
             .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("votes", { ascending: true });
+              expect(comment).toBeSortedBy("votes", { descending: true });
             });
         });
         test("status 200: sorts the comments by any valid column passed in as a query - test for comment_id query", () => {
@@ -501,7 +501,7 @@ describe("/api", () => {
             .expect(200)
             .then(({ body: { comment } }) => {
               expect(comment).toBeSortedBy("comment_id", {
-                ascending: true,
+                descending: true,
                 coerce: true,
               });
             });
@@ -511,7 +511,7 @@ describe("/api", () => {
             .get("/api/articles/1/comments?sort_by=author")
             .expect(200)
             .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("author", { ascending: true });
+              expect(comment).toBeSortedBy("author", { descending: true });
             });
         });
         test("status 404: trying to sort comments for a non-existent article_id", () => {

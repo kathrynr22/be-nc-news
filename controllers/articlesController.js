@@ -25,6 +25,11 @@ exports.patchArticlesById = (req, res, next) => {
 
   updateArticleById(article_id, inc_votes)
     .then((article) => {
+      console.log("inside patch articles by id then");
+      console.log(article);
+      console.log(article[0]);
+      //const patchedArticle = article[0];
+      //res.status(200).send({ patchedArticle });
       res.status(200).send({ article });
     })
     .catch((err) => {
@@ -39,11 +44,10 @@ exports.postCommentById = (req, res, next) => {
 
   insertComment(article_id, body, username)
     .then((comment) => {
-      console.log("inside insertComment");
+      console.log("inside insert comment then");
       console.log(comment);
-      console.log(comment.comment);
-      //console.log(commentObj);
       const commentObj = comment[0];
+      console.log(commentObj);
       res.status(201).send({ commentObj });
     })
     .catch((err) => {
