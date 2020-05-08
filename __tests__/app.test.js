@@ -538,6 +538,14 @@ describe("/api", () => {
               expect(comment).toBeSortedBy("created_at", { descending: true });
             });
         });
+        test("status 200: accepts an order by query that sorts the comments by ascending order", () => {
+          return request(app)
+            .get("/api/articles/1/comments?order=asc")
+            .expect(200)
+            .then(({ body: { comment } }) => {
+              expect(comment).toBeSortedBy("created_at", { ascending: true });
+            });
+        });
         test("status 404: trying to order comments for a non-existent article_id", () => {
           return request(app)
             .get("/api/articles/76666666/comments?order=desc")
