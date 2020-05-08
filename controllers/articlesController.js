@@ -11,9 +11,6 @@ exports.getArticleById = (req, res, next) => {
 
   selectArticleById(article_id)
     .then((article_by_id) => {
-      console.log("inside then block");
-      //console.log(article);
-      //const articleObj = article[0];
       res.status(200).send({ article_by_id });
     })
     .catch((err) => {
@@ -26,13 +23,10 @@ exports.patchArticlesById = (req, res, next) => {
   const { article_id } = req.params;
 
   updateArticleById(article_id, inc_votes)
-    .then((article) => {
+    .then((patchedArticle) => {
       console.log("inside patch articles by id then");
-      console.log(article);
-      console.log(article[0]);
-      //const patchedArticle = article[0];
-      //res.status(200).send({ patchedArticle });
-      res.status(200).send({ article });
+
+      res.status(200).send({ patchedArticle });
     })
     .catch((err) => {
       next(err);

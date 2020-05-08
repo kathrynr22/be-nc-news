@@ -331,8 +331,8 @@ describe("/api", () => {
             .patch("/api/articles/1")
             .send({ inc_votes: 1 })
             .expect(200)
-            .then(({ body }) => {
-              expect(body.article[0].votes).toEqual(101);
+            .then(({ body: { patchedArticle } }) => {
+              expect(patchedArticle[0].votes).toEqual(101);
             });
         });
         test("responds with the updated article decremented", () => {
@@ -340,8 +340,8 @@ describe("/api", () => {
             .patch("/api/articles/1")
             .send({ inc_votes: -1 })
             .expect(200)
-            .then(({ body }) => {
-              expect(body.article[0].votes).toEqual(99);
+            .then(({ body: { patchedArticle } }) => {
+              expect(patchedArticle[0].votes).toEqual(99);
             });
         });
         test("status 404: trying to patch a non-existent article_id", () => {
