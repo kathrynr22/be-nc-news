@@ -26,6 +26,7 @@ describe("/api", () => {
           .then(({ body }) => {
             expect(Array.isArray(body.topics)).toBe(true);
             expect(body.topics.length).toBe(3);
+            expect(body.topics.length).toBe(3);
           });
       });
       test("topic objects contains a slug and description property", () => {
@@ -574,7 +575,7 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body }) => {
-              expect(body.comment[0].votes).toEqual(17);
+              expect(body.comment.votes).toEqual(17);
             });
         });
         test("responds with the updated comment decremented", () => {
@@ -583,7 +584,7 @@ describe("/api", () => {
             .send({ inc_votes: -1 })
             .expect(200)
             .then(({ body }) => {
-              expect(body.comment[0].votes).toEqual(15);
+              expect(body.comment.votes).toEqual(15);
             });
         });
         test("status 404: trying to patch a non-existent comment_id", () => {
