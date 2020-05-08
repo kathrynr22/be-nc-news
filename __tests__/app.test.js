@@ -61,8 +61,8 @@ describe("/api", () => {
           return request(app)
             .get("/api/users/lurker")
             .expect(200)
-            .then(({ body: { user } }) => {
-              expect(user[0]).toEqual({
+            .then(({ body }) => {
+              expect(body.username[0]).toEqual({
                 username: "lurker",
                 name: "do_nothing",
                 avatar_url:

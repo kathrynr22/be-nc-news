@@ -6,7 +6,6 @@ const {
 exports.patchCommentsById = (req, res, next) => {
   const { inc_votes } = req.body;
   const { comment_id } = req.params;
-  console.log(req.params);
 
   updateCommentById(comment_id, inc_votes)
     .then((comment) => {
@@ -25,7 +24,6 @@ exports.deleteCommentById = (req, res, next) => {
 
   removeCommentById(comment_id)
     .then((delCount) => {
-      console.log(delCount);
       res.sendStatus(204);
     })
     .catch((err) => {
