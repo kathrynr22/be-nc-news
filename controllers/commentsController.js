@@ -3,7 +3,7 @@ const {
   removeCommentById,
 } = require("../models/commentsModels");
 
-exports.patchCommentsById = (req, res, next) => {
+exports.patchCommentById = (req, res, next) => {
   const { inc_votes } = req.body;
   const { comment_id } = req.params;
 

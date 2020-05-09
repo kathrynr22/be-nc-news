@@ -7,7 +7,7 @@ beforeEach(() => connection.seed.run());
 afterAll(() => connection.destroy());
 
 describe("/api", () => {
-  describe("missing route", () => {
+  describe("/api only", () => {
     test("status 404: missing route", () => {
       return request(app)
         .get("/api/nowhere")
@@ -15,6 +15,18 @@ describe("/api", () => {
         .then(({ body: { msg } }) => {
           expect(msg).toBe("resource not found");
         });
+    });
+    test("invalid methods", () => {
+      const invalidMethods = ["patch", "post", "delete"];
+      const requests = invalidMethods.map((method) => {
+        return request(app)
+          [method]("/api/")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
+          });
+      });
+      return Promise.all(requests);
     });
   });
   describe("/topics", () => {
@@ -46,8 +58,8 @@ describe("/api", () => {
           return request(app)
             [method]("/api/topics")
             .expect(405)
-            .then((res) => {
-              expect(res.body.msg).toBe("method not allowed");
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("method not allowed");
             });
         });
         return Promise.all(requests);
