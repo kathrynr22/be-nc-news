@@ -10,8 +10,8 @@ exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
 
   selectArticleById(article_id)
-    .then((article_by_id) => {
-      res.status(200).send({ article_by_id });
+    .then((articleById) => {
+      res.status(200).send({ articleById });
     })
     .catch((err) => {
       next(err);
