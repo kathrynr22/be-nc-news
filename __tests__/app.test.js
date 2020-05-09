@@ -384,12 +384,12 @@ describe("/api", () => {
               body:
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
             })
-            .then(({ body }) => {
-              expect(body.commentObj.body).toEqual(
+            .then(({ body: { postedComment } }) => {
+              expect(postedComment[0].body).toEqual(
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky."
               );
-              expect(body.commentObj.article_id).toEqual(1);
-              expect(body.commentObj.author).toEqual("butter_bridge");
+              expect(postedComment[0].article_id).toEqual(1);
+              expect(postedComment[0].author).toEqual("butter_bridge");
             });
         });
         test("status 400: trying to comment on an invalid article_id not a number", () => {

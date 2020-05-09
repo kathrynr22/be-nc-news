@@ -37,12 +37,8 @@ exports.postCommentById = (req, res, next) => {
   const { article_id } = req.params;
 
   insertComment(article_id, body, username)
-    .then((comment) => {
-      console.log("inside insert comment then");
-      console.log(comment);
-      const commentObj = comment[0];
-      console.log(commentObj);
-      res.status(201).send({ commentObj });
+    .then((postedComment) => {
+      res.status(201).send({ postedComment });
     })
     .catch((err) => {
       next(err);
