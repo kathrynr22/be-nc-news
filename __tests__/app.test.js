@@ -607,14 +607,14 @@ describe("/api", () => {
               expect(commentsByArticleId).toEqual([]);
             });
         });
-        // test("status 400: trying to order articles by an invalid method", () => {
-        //   return request(app)
-        //     .get("/api/articles/1/comments/order=disc")
-        //     .expect(400)
-        //     .then(({ body: { msg } }) => {
-        //       expect(msg).toBe("bad request");
-        //     });
-        // });
+        test("status 400: trying to order articles by an invalid method", () => {
+          return request(app)
+            .get("/api/articles/1/comments?order=disc")
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
       });
     });
   });

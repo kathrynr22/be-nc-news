@@ -57,6 +57,12 @@ exports.insertComment = (article_id, body, username) => {
 //wouldnt let me do promise.reject and send 404 kept returning 500 and psql
 
 exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
+  if (order !== undefined && order !== "asc" && order !== "desc") {
+    return Promise.reject({
+      status: 400,
+      msg: "bad request",
+    });
+  }
   return knex
     .select("comment_id", "votes", "created_at", "author", "body")
     .from("comments")
