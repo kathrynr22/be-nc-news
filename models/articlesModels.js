@@ -19,7 +19,10 @@ exports.selectArticleById = (article_id) => {
     });
 };
 
-exports.updateArticleById = (article_id, inc_votes) => {
+exports.updateArticleById = (article_id, inc_votes, body) => {
+  // if (body === undefined) {
+  //   selectArticleById(article_jd);
+  // }
   return knex("articles")
     .where("article_id", article_id)
     .increment("votes", inc_votes)
@@ -59,18 +62,27 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
     .from("comments")
     .where("article_id", article_id)
     .orderBy(sort_by || "created_at", order || "desc")
-    .then((comment) => {
-      console.log("inside select comments by id yo");
-      console.log(comment);
-      if (comment.length === 0)
-        return Promise.reject({ status: 404, msg: "article_id not found" });
-      else {
-        return comment;
+    .then((comments) => {
+      if (comments.length === 0) {
+        return knex
+          .select("*")
+          .from("articles")
+          .where("article_id", article_id)
+          .then(([article]) => {
+            if (article === undefined) {
+              return Promise.reject({
+                status: 404,
+                msg: "article_id not found",
+              });
+            }
+            return [];
+          });
       }
+      return comments;
     });
 };
 
-//come back and refactor to pass test for ordering via an invalid method
+//come back and refactor to pass test for sorting by an invalid method
 exports.selectArticles = (sort_by, order, author, topic) => {
   if (order !== undefined && order !== "asc" && order !== "desc") {
     return Promise.reject({
@@ -97,7 +109,6 @@ exports.selectArticles = (sort_by, order, author, topic) => {
       if (topic) query.where("articles.topic", topic);
     })
     .then((articles) => {
-      //if (!articles.length) {
       if (articles.length === 0) {
         if (author) {
           return knex
@@ -105,7 +116,7 @@ exports.selectArticles = (sort_by, order, author, topic) => {
             .from("users")
             .where("username", author)
             .then(([user]) => {
-              if (!user) {
+              if (user === undefined) {
                 return Promise.reject({
                   status: 404,
                   msg: "author not found",
@@ -119,7 +130,7 @@ exports.selectArticles = (sort_by, order, author, topic) => {
             .from("topics")
             .where("slug", topic)
             .then(([topic]) => {
-              if (!topic) {
+              if (topic === undefined) {
                 return Promise.reject({
                   status: 404,
                   msg: "topic not found",

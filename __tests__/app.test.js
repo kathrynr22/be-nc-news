@@ -381,6 +381,21 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
+        // test.only("status 101: ignores a patch request with no info in the request body, sends the unchanged article back to the client", () => {
+        //   return (
+        //     request(app)
+        //       .patch("/api/articles/1")
+        //       .send({})
+        //       .expect(101)
+        //       //.then(({ body: { articleById } }) => {
+        //       .then((response) => {
+        //         console.log("inside status 101 test");
+        //         console.log(response);
+        //         console.log(response.body);
+        //         expect(articleById[0].article_id).toEqual(1);
+        //       })
+        //   );
+        // });
       });
     });
     describe("/:article_id/comments", () => {
@@ -473,9 +488,9 @@ describe("/api", () => {
               });
             });
         });
-        test("status 404: trying to get comments for an invalid article_id", () => {
+        test("status 404: trying to get comments for a non-existent article_id", () => {
           return request(app)
-            .get("/api/articles/76666666/comments")
+            .get("/api/articles/76655/comments")
             .expect(404)
             .then(({ body: { msg } }) => {
               expect(msg).toBe("article_id not found");
@@ -489,7 +504,7 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
-        test("status 200: by default, sorts the comments by the created_at column ", () => {
+        test("status 200: by default, sorts the comments by the created_at column and by descending order", () => {
           return request(app)
             .get("/api/articles/1/comments")
             .expect(200)
@@ -582,6 +597,24 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
+        test("status 200: responds with empty array when an article exists but has no comments", () => {
+          return request(app)
+            .get("/api/articles/2/comments")
+            .expect(200)
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(Array.isArray(commentsByArticleId)).toBe(true);
+              expect(commentsByArticleId.length).toBe(0);
+              expect(commentsByArticleId).toEqual([]);
+            });
+        });
+        // test("status 400: trying to order articles by an invalid method", () => {
+        //   return request(app)
+        //     .get("/api/articles/1/comments/order=disc")
+        //     .expect(400)
+        //     .then(({ body: { msg } }) => {
+        //       expect(msg).toBe("bad request");
+        //     });
+        // });
       });
     });
   });
