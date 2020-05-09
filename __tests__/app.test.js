@@ -262,7 +262,7 @@ describe("/api", () => {
           .get("/api/articles?author=kathryn")
           .expect(404)
           .then(({ body: { msg } }) => {
-            expect(msg).toBe("resource not found");
+            expect(msg).toBe("author not found");
           });
       });
       test("status 404: trying to filter articles based on a non-existent topic", () => {
@@ -270,27 +270,27 @@ describe("/api", () => {
           .get("/api/articles?topic=kathryn")
           .expect(404)
           .then(({ body: { msg } }) => {
-            expect(msg).toBe("resource not found");
+            expect(msg).toBe("topic not found");
           });
       });
       test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
         return request(app)
           .get("/api/articles?topic=paper")
           .expect(200)
-          .then((response) => {
-            expect(response.body.articles).to.have.length(0);
-            expect(response.body.articles).to.be.an("array");
-            expect(response.body.articles).to.deep.equal([]);
+          .then(({ body: { allArticles } }) => {
+            expect(Array.isArray(allArticles)).toBe(true);
+            expect(allArticles.length).toBe(0);
+            expect(allArticles).toEqual([]);
           });
       });
       test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
         return request(app)
           .get("/api/articles?author=lurker")
           .expect(200)
-          .then((response) => {
-            expect(response.body.articles).to.have.length(0);
-            expect(response.body.articles).to.be.an("array");
-            expect(response.body.articles).to.deep.equal([]);
+          .then(({ body: { allArticles } }) => {
+            expect(Array.isArray(allArticles)).toBe(true);
+            expect(allArticles.length).toBe(0);
+            expect(allArticles).toEqual([]);
           });
       });
       // test.only('status 400: trying to filter articles for an invalid author', () => {
