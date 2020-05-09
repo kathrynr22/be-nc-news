@@ -273,6 +273,26 @@ describe("/api", () => {
             expect(msg).toBe("resource not found");
           });
       });
+      test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
+        return request(app)
+          .get("/api/articles?topic=paper")
+          .expect(200)
+          .then((response) => {
+            expect(response.body.articles).to.have.length(0);
+            expect(response.body.articles).to.be.an("array");
+            expect(response.body.articles).to.deep.equal([]);
+          });
+      });
+      test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
+        return request(app)
+          .get("/api/articles?author=lurker")
+          .expect(200)
+          .then((response) => {
+            expect(response.body.articles).to.have.length(0);
+            expect(response.body.articles).to.be.an("array");
+            expect(response.body.articles).to.deep.equal([]);
+          });
+      });
       // test.only('status 400: trying to filter articles for an invalid author', () => {
       //   return request(app)
       //     .get('/api/articles?author=29395')
