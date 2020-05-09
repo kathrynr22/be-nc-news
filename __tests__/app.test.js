@@ -99,16 +99,16 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles/")
           .expect(200)
-          .then(({ body }) => {
-            expect(Array.isArray(body.articles)).toBe(true);
+          .then(({ body: { allArticles } }) => {
+            expect(Array.isArray(allArticles)).toBe(true);
           });
       });
       test("each article object contains certain properties", () => {
         return request(app)
           .get("/api/articles/")
           .expect(200)
-          .then(({ body }) => {
-            body.articles.forEach((article) => {
+          .then(({ body: { allArticles } }) => {
+            allArticles.forEach((article) => {
               expect(article).toHaveProperty("author");
               expect(article).toHaveProperty("created_at");
               expect(article).toHaveProperty("comment_count");
@@ -124,8 +124,8 @@ describe("/api", () => {
           return request(app)
             [method]("/api/articles")
             .expect(405)
-            .then((res) => {
-              expect(res.body.msg).toBe("method not allowed");
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("method not allowed");
             });
         });
         return Promise.all(requests);
@@ -134,8 +134,8 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles/")
           .expect(200)
-          .then(({ body }) => {
-            expect(body.articles).toBeSortedBy("created_at", {
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("created_at", {
               descending: true,
             });
           });
@@ -144,16 +144,16 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles?sort_by=author")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("author", { descending: true });
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("author", { descending: true });
           });
       });
       test("status 200: sorts the articles by any valid column passed in as a query - test for article_id query", () => {
         return request(app)
           .get("/api/articles?sort_by=article_id")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("article_id", {
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("article_id", {
               descending: true,
               coerce: true,
             });
@@ -163,24 +163,24 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles?sort_by=votes")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("votes", { descending: true });
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("votes", { descending: true });
           });
       });
       test("status 200: sorts the articles by any valid column passed in as a query - test for topic query", () => {
         return request(app)
           .get("/api/articles?sort_by=topic")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("topic", { descending: true });
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("topic", { descending: true });
           });
       });
       test("status 200: sorts the articles by any valid column passed in as a query - test for comment_count query", () => {
         return request(app)
           .get("/api/articles?sort_by=comment_count")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("comment_count", {
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("comment_count", {
               descending: true,
               coerce: true,
             });
@@ -206,16 +206,18 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles/?order=desc")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("created_at", { descending: true });
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("created_at", {
+              descending: true,
+            });
           });
       });
       test("status 200: accepts an order by query that sorts the articles by ascending order", () => {
         return request(app)
           .get("/api/articles/?order=asc")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles).toBeSortedBy("created_at", { ascending: true });
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles).toBeSortedBy("created_at", { ascending: true });
           });
       });
       // test("status 400: trying to order via an invalid method", () => {
@@ -230,8 +232,8 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles?author=butter_bridge")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles[0].author).toEqual("butter_bridge");
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles[0].author).toEqual("butter_bridge");
           });
       });
 
@@ -239,8 +241,8 @@ describe("/api", () => {
         return request(app)
           .get("/api/articles?topic=cats")
           .expect(200)
-          .then(({ body: { articles } }) => {
-            expect(articles[0].topic).toEqual("cats");
+          .then(({ body: { allArticles } }) => {
+            expect(allArticles[0].topic).toEqual("cats");
           });
       });
       test("status 404: trying to filter articles based on a non-existent author", () => {
@@ -279,8 +281,8 @@ describe("/api", () => {
         return request(app)
           .delete("/api/articles")
           .expect(405)
-          .then((res) => {
-            expect(res.body.msg).toBe("method not allowed");
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
           });
       });
     });

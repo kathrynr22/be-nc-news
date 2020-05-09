@@ -64,8 +64,8 @@ exports.getArticles = (req, res, next) => {
   const { sort_by, order, author, topic } = req.query;
 
   selectArticles(sort_by, order, author, topic)
-    .then((articles) => {
-      res.status(200).send({ articles });
+    .then((allArticles) => {
+      res.status(200).send({ allArticles });
     })
     .catch((err) => {
       next(err);
