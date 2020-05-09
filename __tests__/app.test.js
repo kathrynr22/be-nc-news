@@ -106,7 +106,7 @@ describe("/api", () => {
     });
   });
   describe("/articles", () => {
-    describe.only("GET", () => {
+    describe("GET", () => {
       test("status: 200 responds with an articles array of article objects", () => {
         return request(app)
           .get("/api/articles/")
@@ -285,28 +285,12 @@ describe("/api", () => {
             expect(allArticles).toEqual([]);
           });
       });
-      // test.only('status 400: trying to filter articles for an invalid author', () => {
-      //   return request(app)
-      //     .get('/api/articles?author=29395')
-      //     .expect(400)
-      //     .then(({ body: { msg } }) => {
-      //       expect(msg).toBe('bad request');
-      //     });
-      // });
       test("status 400: trying to order articles by an invalid method", () => {
         return request(app)
           .get("/api/articles/?order=disc")
           .expect(400)
           .then(({ body: { msg } }) => {
             expect(msg).toBe("bad request");
-          });
-      });
-      test("invalid method", () => {
-        return request(app)
-          .delete("/api/articles")
-          .expect(405)
-          .then(({ body: { msg } }) => {
-            expect(msg).toBe("method not allowed");
           });
       });
     });
