@@ -445,17 +445,16 @@ describe("/api", () => {
           return request(app)
             .get("/api/articles/1/comments")
             .expect(200)
-            .then(({ body }) => {
-              console.log("inside the get comments test");
-              expect(Array.isArray(body.comment)).toBe(true);
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(Array.isArray(commentsByArticleId)).toBe(true);
             });
         });
         test("comment object contains certain properties", () => {
           return request(app)
             .get("/api/articles/1/comments")
             .expect(200)
-            .then(({ body }) => {
-              body.comment.forEach((comment) => {
+            .then(({ body: { commentsByArticleId } }) => {
+              commentsByArticleId.forEach((comment) => {
                 expect(comment).toHaveProperty("comment_id");
                 expect(comment).toHaveProperty("votes");
                 expect(comment).toHaveProperty("created_at");
@@ -484,24 +483,28 @@ describe("/api", () => {
           return request(app)
             .get("/api/articles/1/comments")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("created_at", { descending: true });
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("created_at", {
+                descending: true,
+              });
             });
         });
         test("status 200: sorts the comments by any valid column passed in as a query - test for votes query", () => {
           return request(app)
             .get("/api/articles/1/comments?sort_by=votes")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("votes", { descending: true });
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("votes", {
+                descending: true,
+              });
             });
         });
         test("status 200: sorts the comments by any valid column passed in as a query - test for comment_id query", () => {
           return request(app)
             .get("/api/articles/1/comments?sort_by=comment_id")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("comment_id", {
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("comment_id", {
                 descending: true,
                 coerce: true,
               });
@@ -511,8 +514,10 @@ describe("/api", () => {
           return request(app)
             .get("/api/articles/1/comments?sort_by=author")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("author", { descending: true });
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("author", {
+                descending: true,
+              });
             });
         });
         test("status 404: trying to sort comments for a non-existent article_id", () => {
@@ -535,16 +540,20 @@ describe("/api", () => {
           return request(app)
             .get("/api/articles/1/comments?order=desc")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("created_at", { descending: true });
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("created_at", {
+                descending: true,
+              });
             });
         });
         test("status 200: accepts an order by query that sorts the comments by ascending order", () => {
           return request(app)
             .get("/api/articles/1/comments?order=asc")
             .expect(200)
-            .then(({ body: { comment } }) => {
-              expect(comment).toBeSortedBy("created_at", { ascending: true });
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(commentsByArticleId).toBeSortedBy("created_at", {
+                ascending: true,
+              });
             });
         });
         test("status 404: trying to order comments for a non-existent article_id", () => {
