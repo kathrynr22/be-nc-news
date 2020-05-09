@@ -60,7 +60,7 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
     .where("article_id", article_id)
     .orderBy(sort_by || "created_at", order || "desc")
     .then((comment) => {
-      console.log("inside select comments by id");
+      console.log("inside select comments by id yo");
       console.log(comment);
       if (comment.length === 0)
         return Promise.reject({ status: 404, msg: "article_id not found" });
@@ -72,6 +72,12 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
 
 //come back and refactor to pass test for ordering via an invalid method
 exports.selectArticles = (sort_by, order, author, topic) => {
+  if (order !== undefined && order !== "asc" && order !== "desc") {
+    return Promise.reject({
+      status: 400,
+      msg: "bad request",
+    });
+  }
   return knex
     .select(
       "articles.author",
@@ -91,7 +97,8 @@ exports.selectArticles = (sort_by, order, author, topic) => {
       if (topic) query.where("articles.topic", topic);
     })
     .then((articles) => {
-      if (!articles.length) {
+      //if (!articles.length) {
+      if (articles.length === 0) {
         if (author) {
           return knex
             .select("*")

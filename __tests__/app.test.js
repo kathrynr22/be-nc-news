@@ -106,7 +106,7 @@ describe("/api", () => {
     });
   });
   describe("/articles", () => {
-    describe("GET", () => {
+    describe.only("GET", () => {
       test("status: 200 responds with an articles array of article objects", () => {
         return request(app)
           .get("/api/articles/")
@@ -232,14 +232,6 @@ describe("/api", () => {
             expect(allArticles).toBeSortedBy("created_at", { ascending: true });
           });
       });
-      // test("status 400: trying to order via an invalid method", () => {
-      //   return request(app)
-      //     .get("/api/articles/?order=disc")
-      //     .expect(400)
-      //     .then(({ body: { msg } }) => {
-      //       expect(msg).toBe("bad request");
-      //     });
-      // });
       test("status 200: accepts a query that filters the articles by author", () => {
         return request(app)
           .get("/api/articles?author=butter_bridge")
@@ -301,14 +293,14 @@ describe("/api", () => {
       //       expect(msg).toBe('bad request');
       //     });
       // });
-      // test.only('status 400: trying to order articles by an invalid method', () => {
-      //   return request(app)
-      //     .get('/api/articles/?order=disc')
-      //     .expect(400)
-      //     .then(({ body: { msg } }) => {
-      //       expect(msg).toBe('bad request');
-      //     });
-      // });
+      test("status 400: trying to order articles by an invalid method", () => {
+        return request(app)
+          .get("/api/articles/?order=disc")
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("bad request");
+          });
+      });
       test("invalid method", () => {
         return request(app)
           .delete("/api/articles")
