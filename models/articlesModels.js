@@ -47,7 +47,10 @@ exports.insertComment = (article_id, body, username) => {
       article_id: article_id,
       created_at: date,
     })
-    .returning("*");
+    .returning("*")
+    .then((comment) => {
+      return comment[0];
+    });
 };
 
 //wouldnt let me do promise.reject and send 404 kept returning 500 and psql
