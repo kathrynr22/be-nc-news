@@ -627,7 +627,8 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedComment } }) => {
-              console.log(patchedComment);
+              //console.log("inside patched test");
+              //console.log(patchedComment);
               expect(patchedComment.votes).toEqual(17);
             });
         });
@@ -665,6 +666,25 @@ describe("/api", () => {
             .expect(400)
             .then(({ body: { msg } }) => {
               expect(msg).toBe("bad request");
+            });
+        });
+        test.only("status 200: sends an unchanged comment object for the relevant comment_id when no inc_votes is provided to the request the body", () => {
+          return request(app)
+            .patch("/api/comments/1")
+            .send({ djgodjg: 100 })
+            .expect(200)
+            .then(({ body: { patchedComment } }) => {
+              console.log("inside test");
+              console.log(patchedComment);
+              expect(patchedComment).toEqual({
+                comment_id: 1,
+                author: "butter_bridge",
+                article_id: 9,
+                votes: 16,
+                created_at: "2017-11-22T12:36:03.389Z",
+                body:
+                  "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              });
             });
         });
       });
