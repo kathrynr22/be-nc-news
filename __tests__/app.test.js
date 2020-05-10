@@ -142,7 +142,26 @@ describe("/api", () => {
             });
           });
       });
-
+      test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
+        return request(app)
+          .get("/api/articles?author=lurker")
+          .expect(200)
+          .then(({ body: { allArticles } }) => {
+            expect(Array.isArray(allArticles)).toBe(true);
+            expect(allArticles.length).toBe(0);
+            expect(allArticles).toEqual([]);
+          });
+      });
+      test("status 200: responds with empty array when articles for an topic that does exist but has no articles is requested", () => {
+        return request(app)
+          .get("/api/articles?topic=paper")
+          .expect(200)
+          .then(({ body: { allArticles } }) => {
+            expect(Array.isArray(allArticles)).toBe(true);
+            expect(allArticles.length).toBe(0);
+            expect(allArticles).toEqual([]);
+          });
+      });
       test("status 200: by default, sorts the articles by the created_at column and in descending order", () => {
         return request(app)
           .get("/api/articles/")
@@ -266,26 +285,7 @@ describe("/api", () => {
             expect(msg).toBe("topic not found");
           });
       });
-      test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
-        return request(app)
-          .get("/api/articles?topic=paper")
-          .expect(200)
-          .then(({ body: { allArticles } }) => {
-            expect(Array.isArray(allArticles)).toBe(true);
-            expect(allArticles.length).toBe(0);
-            expect(allArticles).toEqual([]);
-          });
-      });
-      test("status 200: responds with empty array when articles for an author that does exist but has no articles is requested", () => {
-        return request(app)
-          .get("/api/articles?author=lurker")
-          .expect(200)
-          .then(({ body: { allArticles } }) => {
-            expect(Array.isArray(allArticles)).toBe(true);
-            expect(allArticles.length).toBe(0);
-            expect(allArticles).toEqual([]);
-          });
-      });
+
       test("status 400: trying to order articles by an invalid method", () => {
         return request(app)
           .get("/api/articles/?order=disc")
@@ -533,6 +533,16 @@ describe("/api", () => {
               });
             });
         });
+        test("status 200: responds with empty array when an article exists but has no comments", () => {
+          return request(app)
+            .get("/api/articles/2/comments")
+            .expect(200)
+            .then(({ body: { commentsByArticleId } }) => {
+              expect(Array.isArray(commentsByArticleId)).toBe(true);
+              expect(commentsByArticleId.length).toBe(0);
+              expect(commentsByArticleId).toEqual([]);
+            });
+        });
         test("status 404: trying to get comments for a non-existent article_id", () => {
           return request(app)
             .get("/api/articles/76655/comments")
@@ -606,6 +616,22 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
+        test("status 400: trying to sort articles by a non-existent column name (thus invalid)", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=dhgifhif")
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
+        test("status 400: trying to sort articles by an invalid column - invalid because it is an integer (and is also not a column that exists)", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=34542343")
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
         test("status 200: accepts an order by query that orders the comments by descending order", () => {
           return request(app)
             .get("/api/articles/1/comments?order=desc")
@@ -642,27 +668,9 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
-        test("status 200: responds with empty array when an article exists but has no comments", () => {
-          return request(app)
-            .get("/api/articles/2/comments")
-            .expect(200)
-            .then(({ body: { commentsByArticleId } }) => {
-              expect(Array.isArray(commentsByArticleId)).toBe(true);
-              expect(commentsByArticleId.length).toBe(0);
-              expect(commentsByArticleId).toEqual([]);
-            });
-        });
         test("status 400: trying to order articles by an invalid method", () => {
           return request(app)
             .get("/api/articles/1/comments?order=disc")
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).toBe("bad request");
-            });
-        });
-        test("status 400: trying to sort articles by an invalid column", () => {
-          return request(app)
-            .get("/api/articles/1/comments?sort_by=dhgifhif")
             .expect(400)
             .then(({ body: { msg } }) => {
               expect(msg).toBe("bad request");
