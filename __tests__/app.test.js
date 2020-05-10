@@ -70,17 +70,20 @@ describe("/api", () => {
     describe("/:username", () => {
       describe("GET", () => {
         test("status: 200 responds with the requested username object", () => {
-          return request(app)
-            .get("/api/users/lurker")
-            .expect(200)
-            .then(({ body }) => {
-              expect(body.username[0]).toEqual({
-                username: "lurker",
-                name: "do_nothing",
-                avatar_url:
-                  "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
-              });
-            });
+          return (
+            request(app)
+              .get("/api/users/lurker")
+              .expect(200)
+              //.then(({ body }) => {
+              .then(({ body: { userObject } }) => {
+                expect(userObject).toEqual({
+                  username: "lurker",
+                  name: "do_nothing",
+                  avatar_url:
+                    "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+                });
+              })
+          );
         });
         test("status 404: non-existent username", () => {
           return request(app)
