@@ -304,12 +304,12 @@ describe("/api", () => {
             .get("/api/articles/1")
             .expect(200)
             .then(({ body: { articleById } }) => {
-              expect(articleById[0]).toHaveProperty("article_id");
-              expect(articleById[0]).toHaveProperty("author");
-              expect(articleById[0]).toHaveProperty("body");
-              expect(articleById[0]).toHaveProperty("created_at");
-              expect(articleById[0]).toHaveProperty("title");
-              expect(articleById[0]).toHaveProperty("votes");
+              expect(articleById).toHaveProperty("article_id");
+              expect(articleById).toHaveProperty("author");
+              expect(articleById).toHaveProperty("body");
+              expect(articleById).toHaveProperty("created_at");
+              expect(articleById).toHaveProperty("title");
+              expect(articleById).toHaveProperty("votes");
             });
         });
         test("status: 200 responds with the specific requested article", () => {
@@ -317,7 +317,7 @@ describe("/api", () => {
             .get("/api/articles/1")
             .expect(200)
             .then(({ body: { articleById } }) => {
-              expect(articleById[0].article_id).toEqual(1);
+              expect(articleById.article_id).toEqual(1);
             });
         });
         test("status 404: non-existent article_id", () => {
