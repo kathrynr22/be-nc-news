@@ -639,6 +639,18 @@ describe("/api", () => {
     });
   });
   describe("/comments", () => {
+    test("status 405: invalid methods", () => {
+      const invalidMethods = ["get", "post"];
+      const requests = invalidMethods.map((method) => {
+        return request(app)
+          [method]("/api/comments/1")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
+          });
+      });
+      return Promise.all(requests);
+    });
     describe("/:comment_id", () => {
       describe("PATCH", () => {
         test("status 200: responds with the updated comment incremented", () => {
