@@ -606,7 +606,7 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
-        test("status 200: accepts an order by query that sorts the comments by descending order", () => {
+        test("status 200: accepts an order by query that orders the comments by descending order", () => {
           return request(app)
             .get("/api/articles/1/comments?order=desc")
             .expect(200)
@@ -616,7 +616,7 @@ describe("/api", () => {
               });
             });
         });
-        test("status 200: accepts an order by query that sorts the comments by ascending order", () => {
+        test("status 200: accepts an order by query that orders the comments by ascending order", () => {
           return request(app)
             .get("/api/articles/1/comments?order=asc")
             .expect(200)
@@ -655,6 +655,14 @@ describe("/api", () => {
         test("status 400: trying to order articles by an invalid method", () => {
           return request(app)
             .get("/api/articles/1/comments?order=disc")
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("bad request");
+            });
+        });
+        test("status 400: trying to sort articles by an invalid column", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=dhgifhif")
             .expect(400)
             .then(({ body: { msg } }) => {
               expect(msg).toBe("bad request");
