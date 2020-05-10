@@ -46,8 +46,6 @@ exports.postCommentById = (req, res, next) => {
 };
 
 exports.getCommentsByArticleId = (req, res, next) => {
-  console.log("inside the get comments controller");
-
   const { article_id } = req.params;
   const { sort_by, order } = req.query;
 

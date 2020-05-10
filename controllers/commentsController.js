@@ -9,8 +9,6 @@ exports.patchCommentById = (req, res, next) => {
 
   updateCommentById(comment_id, inc_votes)
     .then((patchedComment) => {
-      console.log("inside controller");
-      console.log(patchedComment);
       res.send({ patchedComment });
     })
     .catch((err) => {
@@ -20,7 +18,6 @@ exports.patchCommentById = (req, res, next) => {
 
 exports.deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params;
-  console.log("inside the comments controller");
 
   removeCommentById(comment_id)
     .then((delCount) => {
