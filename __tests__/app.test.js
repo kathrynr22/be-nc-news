@@ -398,6 +398,23 @@ describe("/api", () => {
               });
             });
         });
+        test("status 200: sends an unchanged article object for the relevant article_id when nothing at all is provided to the request the body", () => {
+          return request(app)
+            .patch("/api/articles/1")
+            .send()
+            .expect(200)
+            .then(({ body: { patchedArticle } }) => {
+              expect(patchedArticle).toEqual({
+                article_id: 1,
+                title: "Living in the shadow of a great man",
+                body: "I find this existence challenging",
+                votes: 100,
+                topic: "mitch",
+                author: "butter_bridge",
+                created_at: "2018-11-15T12:21:54.171Z",
+              });
+            });
+        });
       });
     });
 
