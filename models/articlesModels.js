@@ -28,14 +28,10 @@ exports.updateArticleById = (article_id, inc_votes, body) => {
     .increment("votes", inc_votes)
     .returning("*")
     .then((article) => {
-      console.log("inside update articleby id model");
-      console.log(article);
-      //const object = article[0];
-      //console.log(object);
       if (article.length === 0)
         return Promise.reject({ status: 404, msg: "article_id not found" });
       else {
-        return article;
+        return article[0];
       }
     });
 };
