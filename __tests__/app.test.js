@@ -16,7 +16,7 @@ describe("/api", () => {
           expect(msg).toBe("resource not found");
         });
     });
-    test("invalid methods", () => {
+    test("status 405: invalid methods", () => {
       const invalidMethods = ["patch", "post", "delete"];
       const requests = invalidMethods.map((method) => {
         return request(app)
@@ -31,7 +31,7 @@ describe("/api", () => {
   });
   describe("/topics", () => {
     describe("GET", () => {
-      test("status: 200 responds with an array of topic objects", () => {
+      test("status 200: responds with an array of topic objects", () => {
         return request(app)
           .get("/api/topics")
           .expect(200)
@@ -41,7 +41,7 @@ describe("/api", () => {
             expect(body.topics.length).toBe(3);
           });
       });
-      test("topic objects contains a slug and description property", () => {
+      test("status 200: topic objects contains a slug and description property", () => {
         return request(app)
           .get("/api/topics")
           .expect(200)
@@ -52,7 +52,7 @@ describe("/api", () => {
             });
           });
       });
-      test("invalid methods", () => {
+      test("status 405: invalid methods", () => {
         const invalidMethods = ["patch", "post", "delete"];
         const requests = invalidMethods.map((method) => {
           return request(app)
@@ -69,21 +69,18 @@ describe("/api", () => {
   describe("/users", () => {
     describe("/:username", () => {
       describe("GET", () => {
-        test("status: 200 responds with the requested username object", () => {
-          return (
-            request(app)
-              .get("/api/users/lurker")
-              .expect(200)
-              //.then(({ body }) => {
-              .then(({ body: { userObject } }) => {
-                expect(userObject).toEqual({
-                  username: "lurker",
-                  name: "do_nothing",
-                  avatar_url:
-                    "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
-                });
-              })
-          );
+        test("status 200: responds with the requested username object", () => {
+          return request(app)
+            .get("/api/users/lurker")
+            .expect(200)
+            .then(({ body: { userObject } }) => {
+              expect(userObject).toEqual({
+                username: "lurker",
+                name: "do_nothing",
+                avatar_url:
+                  "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+              });
+            });
         });
         test("status 404: non-existent username", () => {
           return request(app)
@@ -93,14 +90,14 @@ describe("/api", () => {
               expect(msg).toBe("username not found");
             });
         });
-        test("invalid methods", () => {
+        test("status 405: invalid methods", () => {
           const invalidMethods = ["patch", "post", "delete"];
           const requests = invalidMethods.map((method) => {
             return request(app)
               [method]("/api/users/lurker")
               .expect(405)
-              .then((res) => {
-                expect(res.body.msg).toBe("method not allowed");
+              .then(({ body: { msg } }) => {
+                expect(msg).toBe("method not allowed");
               });
           });
           return Promise.all(requests);
@@ -110,7 +107,7 @@ describe("/api", () => {
   });
   describe("/articles", () => {
     describe("GET", () => {
-      test("status: 200 responds with an articles array of article objects", () => {
+      test("status 200: responds with an articles array of article objects", () => {
         return request(app)
           .get("/api/articles/")
           .expect(200)
@@ -118,7 +115,7 @@ describe("/api", () => {
             expect(Array.isArray(allArticles)).toBe(true);
           });
       });
-      test("each article object contains certain properties", () => {
+      test("status 200: each article object contains certain properties", () => {
         return request(app)
           .get("/api/articles/")
           .expect(200)
@@ -133,7 +130,7 @@ describe("/api", () => {
             });
           });
       });
-      test("invalid methods", () => {
+      test("status 405: invalid methods", () => {
         const invalidMethods = ["patch", "post", "delete"];
         const requests = invalidMethods.map((method) => {
           return request(app)
@@ -299,7 +296,7 @@ describe("/api", () => {
     });
     describe("/:article_id", () => {
       describe("GET", () => {
-        test("status: 200 responds with an article object", () => {
+        test("status 200: responds with an article object", () => {
           return request(app)
             .get("/api/articles/1")
             .expect(200)
@@ -312,7 +309,7 @@ describe("/api", () => {
               expect(articleById).toHaveProperty("votes");
             });
         });
-        test("status: 200 responds with the specific requested article", () => {
+        test("status 200: responds with the specific requested article", () => {
           return request(app)
             .get("/api/articles/1")
             .expect(200)
@@ -339,7 +336,7 @@ describe("/api", () => {
       });
 
       describe("PATCH", () => {
-        test("responds with the updated article incremented", () => {
+        test("status 200: responds with the updated article incremented", () => {
           return request(app)
             .patch("/api/articles/1")
             .send({ inc_votes: 1 })
@@ -348,7 +345,7 @@ describe("/api", () => {
               expect(patchedArticle.votes).toEqual(101);
             });
         });
-        test("responds with the updated article decremented", () => {
+        test("status 200: responds with the updated article decremented", () => {
           return request(app)
             .patch("/api/articles/1")
             .send({ inc_votes: -1 })
@@ -403,7 +400,7 @@ describe("/api", () => {
     });
     describe("/:article_id/comments", () => {
       describe("POST", () => {
-        test("status: 201 responds with the posted comment", () => {
+        test("status 201: responds with the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")
             .expect(201)
@@ -477,7 +474,7 @@ describe("/api", () => {
               expect(Array.isArray(commentsByArticleId)).toBe(true);
             });
         });
-        test("comment object contains certain properties", () => {
+        test("status 200: comment object contains certain properties", () => {
           return request(app)
             .get("/api/articles/1/comments")
             .expect(200)
@@ -624,7 +621,7 @@ describe("/api", () => {
   describe("/comments", () => {
     describe("/:comment_id", () => {
       describe("PATCH", () => {
-        test("responds with the updated comment incremented", () => {
+        test("status 200: responds with the updated comment incremented", () => {
           return request(app)
             .patch("/api/comments/1")
             .send({ inc_votes: 1 })
@@ -634,7 +631,7 @@ describe("/api", () => {
               expect(patchedComment.votes).toEqual(17);
             });
         });
-        test("responds with the updated comment decremented", () => {
+        test("status 200: responds with the updated comment decremented", () => {
           return request(app)
             .patch("/api/comments/1")
             .send({ inc_votes: -1 })
@@ -672,10 +669,10 @@ describe("/api", () => {
         });
       });
       describe("DELETE", () => {
-        test("status 204 deletes comment from comments table by comment_id", () => {
+        test("status 204: deletes comment from comments table by comment_id", () => {
           return request(app).del("/api/comments/1").expect(204);
         });
-        test("status 404 trying to delete comment of a non-existent comment_id", () => {
+        test("status 404: trying to delete comment of a non-existent comment_id", () => {
           return request(app)
             .del("/api/comments/15454")
             .expect(404)
@@ -683,7 +680,7 @@ describe("/api", () => {
               expect(msg).toBe("comment_id not found");
             });
         });
-        test("status 400 trying to delete comment of an invalid comments_id", () => {
+        test("status 400: trying to delete comment of an invalid comments_id", () => {
           return request(app)
             .del("/api/comments/notAnInt")
             .expect(400)
