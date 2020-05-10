@@ -57,8 +57,6 @@ exports.insertComment = (article_id, body, username) => {
     });
 };
 
-//wouldnt let me do promise.reject and send 404 kept returning 500 and psql
-
 exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
   if (order !== undefined && order !== "asc" && order !== "desc") {
     return Promise.reject({
@@ -91,7 +89,6 @@ exports.selectCommentsByArticleId = (article_id, sort_by, order) => {
     });
 };
 
-//come back and refactor to pass test for sorting by an invalid method
 exports.selectArticles = (sort_by, order, author, topic) => {
   if (order !== undefined && order !== "asc" && order !== "desc") {
     return Promise.reject({
