@@ -381,23 +381,26 @@ describe("/api", () => {
               expect(msg).toBe("bad request");
             });
         });
-        // test.only("status 101: ignores a patch request with no info in the request body, sends the unchanged article back to the client", () => {
-        //   return (
-        //     request(app)
-        //       .patch("/api/articles/1")
-        //       .send({})
-        //       .expect(101)
-        //       //.then(({ body: { articleById } }) => {
-        //       .then((response) => {
-        //         console.log("inside status 101 test");
-        //         console.log(response);
-        //         console.log(response.body);
-        //         expect(articleById[0].article_id).toEqual(1);
-        //       })
-        //   );
-        // });
+        test("status 200: sends an unchanged article object for the relevant article_id when no inc_votes is provided to the request the body", () => {
+          return request(app)
+            .patch("/api/articles/1")
+            .send({ cfgcfu: 100 })
+            .expect(200)
+            .then(({ body: { patchedArticle } }) => {
+              expect(patchedArticle).toEqual({
+                article_id: 1,
+                title: "Living in the shadow of a great man",
+                body: "I find this existence challenging",
+                votes: 100,
+                topic: "mitch",
+                author: "butter_bridge",
+                created_at: "2018-11-15T12:21:54.171Z",
+              });
+            });
+        });
       });
     });
+
     describe("/:article_id/comments", () => {
       describe("POST", () => {
         test("status 201: responds with the posted comment", () => {

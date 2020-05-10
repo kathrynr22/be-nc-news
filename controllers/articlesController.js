@@ -21,14 +21,9 @@ exports.getArticleById = (req, res, next) => {
 exports.patchArticlesById = (req, res, next) => {
   const { inc_votes } = req.body;
   const { article_id } = req.params;
-  const body = req.body;
-  console.log("inside patch articles by id yo");
-  console.log(body);
 
-  updateArticleById(article_id, inc_votes, body)
+  updateArticleById(article_id, inc_votes)
     .then((patchedArticle) => {
-      console.log("inside patched then");
-      console.log(patchedArticle);
       res.status(200).send({ patchedArticle });
     })
     .catch((err) => {

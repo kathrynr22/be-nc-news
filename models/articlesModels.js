@@ -19,10 +19,16 @@ exports.selectArticleById = (article_id) => {
     });
 };
 
-exports.updateArticleById = (article_id, inc_votes, body) => {
-  // if (body === undefined) {
-  //   selectArticleById(article_jd);
-  // }
+exports.updateArticleById = (article_id, inc_votes) => {
+  if (inc_votes === undefined) {
+    return knex("articles")
+      .where("article_id", article_id)
+      .returning("*")
+      .then((article) => {
+        return article[0];
+      });
+  }
+
   return knex("articles")
     .where("article_id", article_id)
     .increment("votes", inc_votes)
