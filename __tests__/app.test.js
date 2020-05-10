@@ -30,6 +30,18 @@ describe("/api", () => {
     });
   });
   describe("/topics", () => {
+    test("status 405: invalid methods", () => {
+      const invalidMethods = ["patch", "post", "delete"];
+      const requests = invalidMethods.map((method) => {
+        return request(app)
+          [method]("/api/topics")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
+          });
+      });
+      return Promise.all(requests);
+    });
     describe("GET", () => {
       test("status 200: responds with an array of topic objects", () => {
         return request(app)
@@ -52,21 +64,21 @@ describe("/api", () => {
             });
           });
       });
-      test("status 405: invalid methods", () => {
-        const invalidMethods = ["patch", "post", "delete"];
-        const requests = invalidMethods.map((method) => {
-          return request(app)
-            [method]("/api/topics")
-            .expect(405)
-            .then(({ body: { msg } }) => {
-              expect(msg).toBe("method not allowed");
-            });
-        });
-        return Promise.all(requests);
-      });
     });
   });
   describe("/users", () => {
+    test("status 405: invalid methods", () => {
+      const invalidMethods = ["patch", "post", "delete"];
+      const requests = invalidMethods.map((method) => {
+        return request(app)
+          [method]("/api/users/lurker")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
+          });
+      });
+      return Promise.all(requests);
+    });
     describe("/:username", () => {
       describe("GET", () => {
         test("status 200: responds with the requested username object", () => {
@@ -90,22 +102,22 @@ describe("/api", () => {
               expect(msg).toBe("username not found");
             });
         });
-        test("status 405: invalid methods", () => {
-          const invalidMethods = ["patch", "post", "delete"];
-          const requests = invalidMethods.map((method) => {
-            return request(app)
-              [method]("/api/users/lurker")
-              .expect(405)
-              .then(({ body: { msg } }) => {
-                expect(msg).toBe("method not allowed");
-              });
-          });
-          return Promise.all(requests);
-        });
       });
     });
   });
   describe("/articles", () => {
+    test("status 405: invalid methods", () => {
+      const invalidMethods = ["patch", "post", "delete"];
+      const requests = invalidMethods.map((method) => {
+        return request(app)
+          [method]("/api/articles")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("method not allowed");
+          });
+      });
+      return Promise.all(requests);
+    });
     describe("GET", () => {
       test("status 200: responds with an articles array of article objects", () => {
         return request(app)
@@ -130,18 +142,7 @@ describe("/api", () => {
             });
           });
       });
-      test("status 405: invalid methods", () => {
-        const invalidMethods = ["patch", "post", "delete"];
-        const requests = invalidMethods.map((method) => {
-          return request(app)
-            [method]("/api/articles")
-            .expect(405)
-            .then(({ body: { msg } }) => {
-              expect(msg).toBe("method not allowed");
-            });
-        });
-        return Promise.all(requests);
-      });
+
       test("status 200: by default, sorts the articles by the created_at column and in descending order", () => {
         return request(app)
           .get("/api/articles/")
@@ -295,6 +296,18 @@ describe("/api", () => {
       });
     });
     describe("/:article_id", () => {
+      test("status 405: invalid methods", () => {
+        const invalidMethods = ["post", "delete"];
+        const requests = invalidMethods.map((method) => {
+          return request(app)
+            [method]("/api/articles/1")
+            .expect(405)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("method not allowed");
+            });
+        });
+        return Promise.all(requests);
+      });
       describe("GET", () => {
         test("status 200: responds with an article object", () => {
           return request(app)
@@ -419,6 +432,18 @@ describe("/api", () => {
     });
 
     describe("/:article_id/comments", () => {
+      test("status 405: invalid methods", () => {
+        const invalidMethods = ["patch", "delete"];
+        const requests = invalidMethods.map((method) => {
+          return request(app)
+            [method]("/api/articles/1/comments")
+            .expect(405)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("method not allowed");
+            });
+        });
+        return Promise.all(requests);
+      });
       describe("POST", () => {
         test("status 201: responds with the posted comment", () => {
           return request(app)
@@ -639,19 +664,19 @@ describe("/api", () => {
     });
   });
   describe("/comments", () => {
-    test("status 405: invalid methods", () => {
-      const invalidMethods = ["get", "post"];
-      const requests = invalidMethods.map((method) => {
-        return request(app)
-          [method]("/api/comments/1")
-          .expect(405)
-          .then(({ body: { msg } }) => {
-            expect(msg).toBe("method not allowed");
-          });
-      });
-      return Promise.all(requests);
-    });
     describe("/:comment_id", () => {
+      test("status 405: invalid methods", () => {
+        const invalidMethods = ["get", "post"];
+        const requests = invalidMethods.map((method) => {
+          return request(app)
+            [method]("/api/comments/1")
+            .expect(405)
+            .then(({ body: { msg } }) => {
+              expect(msg).toBe("method not allowed");
+            });
+        });
+        return Promise.all(requests);
+      });
       describe("PATCH", () => {
         test("status 200: responds with the updated comment incremented", () => {
           return request(app)

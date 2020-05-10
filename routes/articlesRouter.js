@@ -23,6 +23,7 @@ articlesRouter
 articlesRouter
   .route("/:article_id/comments")
   .post(postCommentById)
-  .get(getCommentsByArticleId);
+  .get(getCommentsByArticleId)
+  .all(handle405s);
 
 module.exports = articlesRouter;
