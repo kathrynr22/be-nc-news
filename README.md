@@ -8,6 +8,15 @@ Each article has a rating which can be up or down voted by a registered user.
 
 Users can also add comments about an article. Comments can also be up or down voted. A user can also delete their comments should they wish.
 
+The project has been built using the following:
+
+- Express: a web application framework for Node.js.
+- PostgreSQL: an open source relational database
+- Knex: an SQL query builder for relational databases
+- Jest: a testing framework
+- Jest Sorted: which makes it easier to test if an array has been correctly sorted.
+- Supertest: for testing HTTP assertions
+
 The project is supplied with a test and a development database.
 
 The API has been hosted on Heroku and can be found here: https://kathryn-nc-news.herokuapp.com/
@@ -18,32 +27,23 @@ The API has been hosted on Heroku and can be found here: https://kathryn-nc-news
 
 1. Fork and clone this repository
 
-git clone https://github.com/kathrynr22/be-nc-news
+**git clone https://github.com/kathrynr22/be-nc-news**
 
 2. cd into the repository
 
-cd be-nc-news
+**cd be-nc-news**
 
 3. install the dependencies
 
-npm install
+**npm install**
 
 4. Set up and seed the databases
 
-- npm run seed-dev
-- npm run seed-test
+**npm run seed-dev**
+**npm run seed-test**
 
-* The `seed-dev` script will drop and create the development database (using postgres), then seed the development database.
-* The `seed-test` script will drop and create the test database (using postgres). It then sets an environment variable so that `process.env.NODE_ENV === 'test'` and knex will use the test database when running the seed function.
-
-**Built with **
-
-- Express: a web application framework for Node.js.
-- PostgreSQL: an open source relational database
-- Knex: an SQL query builder for relational databases
-- Jest: a testing framework
-- Jest Sorted: which makes it easier to test if an array has been correctly sorted.
-- Supertest: for testing HTTP assertions
+- The `seed-dev` script will drop and create the development database (using postgres), then seed the development database.
+- The `seed-test` script will drop and create the test database (using postgres). It then sets an environment variable so that `process.env.NODE_ENV === 'test'` and knex will use the test database when running the seed function.
 
 ## Running the tests
 
@@ -51,17 +51,17 @@ I have followed TDD (Test Driven Development) best practises when building this 
 
 To test the utility functions:
 
-npm run test utils
+**npm run test utils**
 
 To test the API:
 
-npm run test app
+**npm run test app**
 
 To test the entire application:
 
-npm test
+**npm test**
 
-## ** What endpoints are being tested? **
+## What endpoints are being tested?
 
 - `GET /api/topics` - Responds with an array of topic objects.
 - `GET /api/users/:username` - Responds with a user object.
