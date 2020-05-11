@@ -16,15 +16,9 @@ describe("/api", () => {
           expect(msg).toBe("resource not found");
         });
     });
-    // test("GET status 200: returns a json object of the avaliable endpoints you can access.", () => {
-    //   return request(app)
-    //     .get("/api/")
-    //     .expect(200)
-    //     .then((res) => {
-    //       console.log(res.body);
-    //       expect(res.body.endpoints).toHaveProperty("/api");
-    //     });
-    // });
+    test.only("GET status 200: returns a json object of the avaliable endpoints you can access.", () => {
+      return request(app).get("/api/").expect(200);
+    });
     test("status 405: invalid methods", () => {
       const invalidMethods = ["patch", "post", "delete"];
       const requests = invalidMethods.map((method) => {
