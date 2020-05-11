@@ -28,11 +28,7 @@ cd be-nc-news
 
 npm install
 
-4. Run the "setup:dbs" script
-
-npm run setup:dbs
-
-5. Set up the databases and seed the test and development environments
+4. Set up and seed the databases
 
 - npm run seed-dev
 - npm run seed-test
