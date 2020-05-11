@@ -27,21 +27,21 @@ The API has been hosted on Heroku and can be found here: https://kathryn-nc-news
 
 1. Fork and clone this repository
 
-git clone https://github.com/kathrynr22/be-nc-news
+`git clone https://github.com/kathrynr22/be-nc-news`
 
 2. cd into the repository
 
-cd be-nc-news
+`cd be-nc-news`
 
 3. install the dependencies
 
-npm install
+`npm install`
 
 4. Set up and seed the databases
 
-npm run seed-dev
+`npm run seed-dev`
 
-npm run seed-test
+`npm run seed-test`
 
 ### Running the tests
 
@@ -49,15 +49,15 @@ I have followed TDD (Test Driven Development) best practises when building this 
 
 To test the utility functions:
 
-npm run test utils
+`npm run test utils`
 
 To test the API:
 
-npm run test app
+`npm run test app`
 
 To test the entire application:
 
-npm test
+`npm test`
 
 ## What endpoints are being tested?
 
