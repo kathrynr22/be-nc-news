@@ -16,6 +16,15 @@ describe("/api", () => {
           expect(msg).toBe("resource not found");
         });
     });
+    // test("GET status 200: returns a json object of the avaliable endpoints you can access.", () => {
+    //   return request(app)
+    //     .get("/api/")
+    //     .expect(200)
+    //     .then((res) => {
+    //       console.log(res.body);
+    //       expect(res.body.endpoints).toHaveProperty("/api");
+    //     });
+    // });
     test("status 405: invalid methods", () => {
       const invalidMethods = ["patch", "post", "delete"];
       const requests = invalidMethods.map((method) => {
@@ -349,7 +358,7 @@ describe("/api", () => {
       });
 
       describe("PATCH", () => {
-        test.only("status 200: responds with the updated article incremented", () => {
+        test("status 200: responds with the updated article incremented", () => {
           return request(app)
             .patch("/api/articles/1")
             .send({ inc_votes: 1 })
@@ -456,6 +465,7 @@ describe("/api", () => {
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
             })
             .then(({ body: { postedComment } }) => {
+              console.log(postedComment);
               expect(postedComment.body).toEqual(
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky."
               );
@@ -517,6 +527,7 @@ describe("/api", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body: { commentsByArticleId } }) => {
+              console.log(commentsByArticleId);
               expect(Array.isArray(commentsByArticleId)).toBe(true);
             });
         });
@@ -701,6 +712,7 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedComment } }) => {
+              console.log(patchedComment);
               expect(patchedComment.votes).toEqual(17);
             });
         });
