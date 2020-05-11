@@ -23,7 +23,7 @@ The API has been hosted on Heroku and can be found here: https://kathryn-nc-news
 
 ## Getting Started
 
-###**Installation**
+### **Installation**
 
 1. Fork and clone this repository
 
@@ -43,7 +43,7 @@ npm run seed-dev
 
 npm run seed-test
 
-## Running the tests
+### Running the tests
 
 I have followed TDD (Test Driven Development) best practises when building this application and it is built on the basis of RESTful endpoints.
 
