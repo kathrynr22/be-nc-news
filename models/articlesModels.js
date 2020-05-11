@@ -32,9 +32,18 @@ exports.updateArticleById = (article_id, inc_votes = 0) => {
       });
   }
 
-  return knex("articles")
-    .where("article_id", article_id)
+  //this does not return comment count - unless i //.increment("votes", inc_votes)
+
+  return knex
+    .select("articles.*")
+    .from("articles")
+    .where("articles.article_id", article_id)
     .increment("votes", inc_votes)
+    .leftJoin("comments", "articles.article_id", "comments.article_id")
+    .count("comments.article_id AS comment_count")
+
+    .groupBy("articles.article_id")
+
     .returning("*")
     .then((article) => {
       if (article.length === 0)

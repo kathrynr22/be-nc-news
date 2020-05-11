@@ -324,6 +324,7 @@ describe("/api", () => {
               expect(articleById).toHaveProperty("created_at");
               expect(articleById).toHaveProperty("title");
               expect(articleById).toHaveProperty("votes");
+              expect(articleById).toHaveProperty("comment_count");
             });
         });
         test("status 200: responds with the specific requested article", () => {
@@ -359,6 +360,7 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
+              console.log("inside status 200 test");
               console.log(patchedArticle);
               expect(patchedArticle.votes).toEqual(101);
             });
@@ -407,6 +409,7 @@ describe("/api", () => {
             .then(({ body: { patchedArticle } }) => {
               console.log("inside status 200 unchanged article");
               console.log(patchedArticle);
+              //need to add comment_count
               expect(patchedArticle).toEqual({
                 article_id: 1,
                 title: "Living in the shadow of a great man",
@@ -424,6 +427,9 @@ describe("/api", () => {
             .send()
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
+              console.log("inside status 200");
+              console.log(patchedArticle);
+              //need to add comment_count
               expect(patchedArticle).toEqual({
                 article_id: 1,
                 title: "Living in the shadow of a great man",
