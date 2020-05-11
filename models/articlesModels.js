@@ -17,10 +17,15 @@ exports.selectArticleById = (article_id) => {
     });
 };
 
-exports.updateArticleById = (article_id, inc_votes) => {
+exports.updateArticleById = (article_id, inc_votes = 0) => {
   if (inc_votes === undefined) {
-    return knex("articles")
-      .where("article_id", article_id)
+    return knex
+      .select("articles.*")
+      .from("articles")
+      .leftJoin("comments", "articles.article_id", "comments.article_id")
+      .count("comments.article_id AS comment_count")
+      .where("articles.article_id", article_id)
+      .groupBy("articles.article_id")
       .returning("*")
       .then((article) => {
         return article[0];

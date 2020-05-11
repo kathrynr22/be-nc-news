@@ -16,7 +16,7 @@ describe("/api", () => {
           expect(msg).toBe("resource not found");
         });
     });
-    test.only("GET status 200: returns a json object of the avaliable endpoints you can access.", () => {
+    test("GET status 200: returns a json object of the avaliable endpoints you can access.", () => {
       return request(app).get("/api/").expect(200);
     });
     test("status 405: invalid methods", () => {
@@ -317,6 +317,7 @@ describe("/api", () => {
             .get("/api/articles/1")
             .expect(200)
             .then(({ body: { articleById } }) => {
+              console.log(articleById);
               expect(articleById).toHaveProperty("article_id");
               expect(articleById).toHaveProperty("author");
               expect(articleById).toHaveProperty("body");
@@ -404,6 +405,8 @@ describe("/api", () => {
             .send({ cfgcfu: 100 })
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
+              console.log("inside status 200 unchanged article");
+              console.log(patchedArticle);
               expect(patchedArticle).toEqual({
                 article_id: 1,
                 title: "Living in the shadow of a great man",
