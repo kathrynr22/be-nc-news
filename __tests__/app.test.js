@@ -349,12 +349,13 @@ describe("/api", () => {
       });
 
       describe("PATCH", () => {
-        test("status 200: responds with the updated article incremented", () => {
+        test.only("status 200: responds with the updated article incremented", () => {
           return request(app)
             .patch("/api/articles/1")
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
+              console.log(patchedArticle);
               expect(patchedArticle.votes).toEqual(101);
             });
         });
