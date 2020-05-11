@@ -1,3 +1,4 @@
+const { DB_URL } = process.env;
 const ENV = process.env.NODE_ENV || "development";
 
 const baseConfig = {
@@ -37,6 +38,14 @@ const customConfig = {
     },
     migrations: {
       directory: "./db/migrations",
+    },
+  },
+  production: {
+    connection: {
+      connectionString: DB_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
   },
 };
