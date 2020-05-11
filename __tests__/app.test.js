@@ -274,7 +274,7 @@ describe("/api", () => {
           .get("/api/articles?author=kathryn")
           .expect(404)
           .then(({ body: { msg } }) => {
-            expect(msg).toBe("author not found");
+            expect(msg).toBe("username not found");
           });
       });
       test("status 404: trying to filter articles based on a non-existent topic", () => {

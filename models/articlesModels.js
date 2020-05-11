@@ -115,37 +115,7 @@ exports.selectArticles = (sort_by, order, author, topic) => {
       if (topic) query.where("articles.topic", topic);
     })
     .then((articles) => {
-      if (articles.length === 0) {
-        if (author) {
-          return knex
-            .select("*")
-            .from("users")
-            .where("username", author)
-            .then(([user]) => {
-              if (user === undefined) {
-                return Promise.reject({
-                  status: 404,
-                  msg: "author not found",
-                });
-              }
-              return [];
-            });
-        } else if (topic) {
-          return knex
-            .select("*")
-            .from("topics")
-            .where("slug", topic)
-            .then(([topic]) => {
-              if (topic === undefined) {
-                return Promise.reject({
-                  status: 404,
-                  msg: "topic not found",
-                });
-              }
-              return [];
-            });
-        }
-      }
       return articles;
+      //Promise.reject({ status: 404, msg: "resource not found" });
     });
 };

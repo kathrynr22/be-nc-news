@@ -6,6 +6,10 @@ const {
   selectArticles,
 } = require("../models/articlesModels");
 
+const { selectUsername } = require("../models/usersModels");
+
+const { selectTopics } = require("../models/topicsModels");
+
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
 
@@ -61,8 +65,12 @@ exports.getCommentsByArticleId = (req, res, next) => {
 exports.getArticles = (req, res, next) => {
   const { sort_by, order, author, topic } = req.query;
 
-  selectArticles(sort_by, order, author, topic)
-    .then((allArticles) => {
+  const queries = [selectArticles(sort_by, order, author, topic)];
+  if (author) queries.push(selectUsername(author));
+  if (topic) queries.push(selectTopics(topic));
+
+  Promise.all(queries)
+    .then(([allArticles, result2]) => {
       res.status(200).send({ allArticles });
     })
     .catch((err) => {
