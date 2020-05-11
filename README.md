@@ -1,4 +1,4 @@
-#NC News Back-End Project
+# NC News Back-End Project
 
 Northcoders News (NC-News) is a news aggregation, web content rating, and discussion website similar to Reddit.
 
@@ -12,7 +12,7 @@ The project is supplied with a test and a development database.
 
 The API has been hosted on Heroku and can be found here: https://kathryn-nc-news.herokuapp.com/
 
-##Getting Started
+## Getting Started
 
 **Installation**
 
@@ -49,7 +49,7 @@ npm run setup:dbs
 - Jest Sorted: which makes it easier to test if an array has been correctly sorted.
 - Supertest: for testing HTTP assertions
 
-##Running the tests##
+## Running the tests
 
 I have followed TDD (Test Driven Development) best practises when building this application and it is built on the basis of RESTful endpoints.
 
