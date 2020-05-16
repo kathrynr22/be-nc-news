@@ -33,6 +33,7 @@ exports.updateArticleById = (article_id, inc_votes = 0) => {
   }
 
   //this does not return comment count - unless i //.increment("votes", inc_votes)
+  //try the increment first then do another knex query to get the data and join in the .then
 
   return knex
     .select("articles.*")
