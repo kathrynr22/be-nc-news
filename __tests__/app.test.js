@@ -360,8 +360,6 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
-              console.log("inside status 200 test");
-              console.log(patchedArticle);
               expect(patchedArticle.votes).toEqual(101);
             });
         });
