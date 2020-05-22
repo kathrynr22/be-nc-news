@@ -31,9 +31,9 @@
     "queries": [],
     "exampleResponse": {
       "userObject": {
-        "username": "lurker",
-        "name": "do_nothing",
-        "avatar_url": "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png"
+        "username": "grumpy19",
+        "avatar_url": "https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013",
+        "name": "Paul Grump"
       }
     }
   },
