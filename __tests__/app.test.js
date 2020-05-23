@@ -167,7 +167,7 @@ describe("/api", () => {
       });
       test("status 200: by default, sorts the articles by the created_at column and in descending order", () => {
         return request(app)
-          .get("/api/articles/")
+          .get("/api/articles")
           .expect(200)
           .then(({ body: { allArticles } }) => {
             expect(allArticles).toBeSortedBy("created_at", {
@@ -239,7 +239,7 @@ describe("/api", () => {
       });
       test("status 200: accepts an order by query that sorts the articles by descending order", () => {
         return request(app)
-          .get("/api/articles/?order=desc")
+          .get("/api/articles?order=desc")
           .expect(200)
           .then(({ body: { allArticles } }) => {
             expect(allArticles).toBeSortedBy("created_at", {
@@ -249,7 +249,7 @@ describe("/api", () => {
       });
       test("status 200: accepts an order by query that sorts the articles by ascending order", () => {
         return request(app)
-          .get("/api/articles/?order=asc")
+          .get("/api/articles?order=asc")
           .expect(200)
           .then(({ body: { allArticles } }) => {
             expect(allArticles).toBeSortedBy("created_at", { ascending: true });
@@ -291,7 +291,7 @@ describe("/api", () => {
 
       test("status 400: trying to order articles by an invalid method", () => {
         return request(app)
-          .get("/api/articles/?order=disc")
+          .get("/api/articles?order=disc")
           .expect(400)
           .then(({ body: { msg } }) => {
             expect(msg).toBe("bad request");
