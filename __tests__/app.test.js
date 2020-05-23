@@ -317,7 +317,6 @@ describe("/api", () => {
             .get("/api/articles/1")
             .expect(200)
             .then(({ body: { articleById } }) => {
-              console.log(articleById);
               expect(articleById).toHaveProperty("article_id");
               expect(articleById).toHaveProperty("author");
               expect(articleById).toHaveProperty("body");
@@ -405,9 +404,6 @@ describe("/api", () => {
             .send({ cfgcfu: 100 })
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
-              console.log("inside status 200 unchanged article");
-              console.log(patchedArticle);
-              //need to add comment_count
               expect(patchedArticle).toEqual({
                 article_id: 1,
                 title: "Living in the shadow of a great man",
@@ -416,6 +412,7 @@ describe("/api", () => {
                 topic: "mitch",
                 author: "butter_bridge",
                 created_at: "2018-11-15T12:21:54.171Z",
+                comment_count: "13",
               });
             });
         });
@@ -425,9 +422,6 @@ describe("/api", () => {
             .send()
             .expect(200)
             .then(({ body: { patchedArticle } }) => {
-              console.log("inside status 200");
-              console.log(patchedArticle);
-              //need to add comment_count
               expect(patchedArticle).toEqual({
                 article_id: 1,
                 title: "Living in the shadow of a great man",
@@ -436,6 +430,7 @@ describe("/api", () => {
                 topic: "mitch",
                 author: "butter_bridge",
                 created_at: "2018-11-15T12:21:54.171Z",
+                comment_count: "13",
               });
             });
         });

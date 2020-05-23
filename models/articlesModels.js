@@ -17,7 +17,7 @@ exports.selectArticleById = (article_id) => {
     });
 };
 
-exports.updateArticleById = (article_id, inc_votes = 0) => {
+exports.updateArticleById = (article_id, inc_votes) => {
   if (inc_votes === undefined) {
     return knex
       .select("articles.*")
@@ -32,20 +32,19 @@ exports.updateArticleById = (article_id, inc_votes = 0) => {
       });
   }
 
-  //this does not return comment count - unless i //.increment("votes", inc_votes)
-  //try the increment first then do another knex query to get the data and join in the .then
-
-  return knex
-    .select("articles.*")
-    .from("articles")
+  return knex("articles")
     .where("articles.article_id", article_id)
     .increment("votes", inc_votes)
-    .leftJoin("comments", "articles.article_id", "comments.article_id")
-    .count("comments.article_id AS comment_count")
-
-    .groupBy("articles.article_id")
-
     .returning("*")
+    .then(() => {
+      return knex("articles")
+        .select("articles.*")
+        .from("articles")
+        .where("articles.article_id", article_id)
+        .leftJoin("comments", "articles.article_id", "comments.article_id")
+        .count("comments.article_id AS comment_count")
+        .groupBy("articles.article_id");
+    })
     .then((article) => {
       if (article.length === 0)
         return Promise.reject({ status: 404, msg: "article_id not found" });
