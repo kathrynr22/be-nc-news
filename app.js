@@ -6,9 +6,11 @@ const {
   handlePSQLErrors,
   send404,
 } = require("./controllers/errorControllers");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use("/api", apiRouter);
 
 app.use((err, req, res, next) => {
