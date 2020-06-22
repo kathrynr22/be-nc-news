@@ -461,7 +461,6 @@ describe("/api", () => {
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
             })
             .then(({ body: { postedComment } }) => {
-              console.log(postedComment);
               expect(postedComment.body).toEqual(
                 "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky."
               );

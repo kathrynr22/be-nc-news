@@ -109,8 +109,7 @@
     }
   },
   "PATCH /api/comments/:comment_id": {
-    "description": "serves an object for a comment for the specified comment_id with the votes property updated",
-    "queries": [],
+    "description": "serves a comment object for the specified comment_id with the votes property updated",
     "body": {
       "inc_votes": 1
     },

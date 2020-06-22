@@ -37,11 +37,11 @@ The API has been hosted on Heroku and can be found here: https://kathryn-nc-news
 
 `npm install`
 
-4. Set up and seed the databases
+4. Set up and seed the database
+
+`npm run setup-dbs`
 
 `npm run seed-dev`
-
-`npm run seed-test`
 
 ### Running the tests
 
