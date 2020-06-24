@@ -1,6 +1,4 @@
 node_modules
 knexfile.js
 query.sql
-output.txt
-README.md
 error-handling.md
