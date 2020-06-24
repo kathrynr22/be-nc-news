@@ -522,7 +522,6 @@ describe("/api", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body: { commentsByArticleId } }) => {
-              console.log(commentsByArticleId);
               expect(Array.isArray(commentsByArticleId)).toBe(true);
             });
         });
@@ -707,7 +706,6 @@ describe("/api", () => {
             .send({ inc_votes: 1 })
             .expect(200)
             .then(({ body: { patchedComment } }) => {
-              console.log(patchedComment);
               expect(patchedComment.votes).toEqual(17);
             });
         });

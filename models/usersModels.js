@@ -1,7 +1,6 @@
 const knex = require("../db/connection");
 
 exports.selectUsername = (username) => {
-  //console.log("inside select username models");
   return knex
     .select("*")
     .from("users")
